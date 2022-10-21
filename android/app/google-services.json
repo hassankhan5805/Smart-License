@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "822421279682",
+    "project_id": "smartlicensesystem",
+    "storage_bucket": "smartlicensesystem.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822421279682:android:3e1216806fb23ec6f53c5b",
+        "android_client_info": {
+          "package_name": "com.smartlicense.smartlicense"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822421279682-ugl9bc33mguoa1blstk1a15p6pa12rcl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKkcVJyKJM3jjB0iXoZvPMomKvRkux6Jw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822421279682-ugl9bc33mguoa1blstk1a15p6pa12rcl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

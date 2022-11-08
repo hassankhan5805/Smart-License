@@ -4,7 +4,7 @@ import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/loading.dart';
-import '../../services/auth.dart';
+import '../../services/authentication.dart';
 import '../../utils/snackbar.dart';
 import '../../utils/widgets/custom_button.dart';
 import '../../utils/widgets/custom_text.dart';
@@ -105,7 +105,7 @@ class ResetPassword extends StatelessWidget {
                             ? {
                                 FocusScope.of(context).unfocus(),
                                 loading.isLoading.value = true,
-                                forgotPassword(email.text)
+                                Authentication().forgotPassword(email.text)
                               }
                             : snackbar(
                                 'Alert',

@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
+import 'package:smartlicense/utils/appbar.dart';
 import 'package:smartlicense/views/authentication/reset_password.dart';
 import 'package:smartlicense/views/authentication/signup.dart';
-
 import '../../controllers/loading.dart';
-import '../../services/auth.dart';
+import '../../services/authentication.dart';
 import '../../utils/snackbar.dart';
 import '../../utils/widgets/custom_button.dart';
 import '../../utils/widgets/custom_text.dart';
@@ -21,37 +20,11 @@ class Signin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
         Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            leading: GestureDetector(
-              onTap: () => Get.offAll(() => SignUp()),
-              child: Container(
-                width: double.infinity,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    Icon(
-                      CupertinoIcons.chevron_back,
-                      size: 22.sp,
-                      color: Colors.blue,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            title: Text(
-              "Back",
-              style: TextStyle(color: Colors.blue),
-            ),
-          ),
+          appBar: appBar(title: "Sign in"),
           body: ListView(
             children: [
               Padding(
@@ -73,14 +46,14 @@ class Signin extends StatelessWidget {
                       SizedBox(
                         height: 2.h,
                       ),
-                      alignBlueTextButton("Dont have an acount?\nGo to Sign Up",
-                          () {
-                        Get.offAll(() => SignUp());
+                      alignBlueTextButton(
+                          "Don't have an acount?\nGo to Sign Up", () {
+                        Get.to(() => SignUp());
                       }),
                       SizedBox(
                         height: 2.h,
                       ),
-                      textField("E-Mail-Adresse*", email,
+                      textField("E-Mail-Adresse", email,
                           textInputType: TextInputType.emailAddress),
                       textField("Password", passController, obscureText: true),
                       Padding(
@@ -112,20 +85,14 @@ class Signin extends StatelessWidget {
                           child: alignBodyText(".",
                               boxAlignment: Alignment.centerLeft)),
                       Spacer(),
-                      customButton("Anmelden", () {
-                        if (email.text.isEmpty && passController.text.isEmpty) {
-                          snackbar('Alert', "All fields are required");
-                        } else if (!GetUtils.isEmail(email.text)) {
-                          snackbar('Alert', "Email is not valid");
-                        } else {
+                      customButton("Continue", () {
+                        if (formValidation()) {
                           FocusScope.of(context).unfocus();
-                          loading.isLoading.value = true;
-                          signinWithEmail(email.text, passController.text);
+                          Authentication()
+                              .signinWithEmail(email.text, passController.text);
                         }
                       }),
-                      SizedBox(
-                        height: 2.h,
-                      )
+                      SizedBox(height: 2.h)
                     ],
                   ),
                 ),
@@ -136,5 +103,17 @@ class Signin extends StatelessWidget {
         LoadingWidget()
       ],
     );
+  }
+
+  bool formValidation() {
+    if (email.text.isEmpty && passController.text.isEmpty) {
+      alertSnackbar("All fields are required");
+      return false;
+    } else if (!GetUtils.isEmail(email.text)) {
+      alertSnackbar("Email is not valid");
+      return false;
+    } else {
+      return true;
+    }
   }
 }

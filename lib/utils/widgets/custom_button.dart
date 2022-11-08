@@ -42,7 +42,7 @@ alignBlueTextButton(String text, Function onTap, {Alignment? alignment}) {
       onTap: () => onTap(),
       child: Text(
         text,
-        style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold), //
+        style: TextStyle(color: Colors.blue), //
         textAlign: TextAlign.center,
       ),
     ),

@@ -51,10 +51,10 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
       });
     });
 
-    Future.delayed(Duration(seconds: 4), () {
+    Future.delayed(Duration(seconds: 3), () {
       FirebaseAuth.instance.currentUser != null
-          ? Get.to(() => HomePage())
-          : Get.to(() => Signin());
+          ? Get.offAll(() => HomePage())
+          : Get.offAll(() => Signin());
     });
   }
 

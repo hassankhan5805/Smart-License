@@ -101,7 +101,6 @@ class SignUp extends StatelessWidget {
                         name: name.text,
                         email: email.text,
                         pass: passController.text,
-                        admin: isAdmin.value,
                         isAdmin: isAdmin.value,
                         adminType: adminType.value,
                         designation: designation.text);

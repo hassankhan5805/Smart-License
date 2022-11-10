@@ -4,7 +4,6 @@ import 'package:sizer/sizer.dart';
 import 'package:smartlicense/utils/appbar.dart';
 import 'package:smartlicense/views/authentication/reset_password.dart';
 import 'package:smartlicense/views/authentication/signup.dart';
-import '../../controllers/loading.dart';
 import '../../services/authentication.dart';
 import '../../utils/snackbar.dart';
 import '../../utils/widgets/custom_button.dart';
@@ -16,7 +15,6 @@ class Signin extends StatelessWidget {
   Signin({Key? key}) : super(key: key);
   final TextEditingController passController = TextEditingController();
   final TextEditingController email = TextEditingController();
-  final loading = Get.find<LoadingController>();
 
   @override
   Widget build(BuildContext context) {

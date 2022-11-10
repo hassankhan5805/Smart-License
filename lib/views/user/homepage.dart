@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smartlicense/services/authentication.dart';
 
-import '../utils/widgets/custom_button.dart';
+import '../../utils/widgets/custom_button.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -20,9 +20,7 @@ class HomePage extends StatelessWidget {
             ),
             customButton("Sign Out!", () {
               Authentication().signOut();
-            },
-                bgColor: MaterialStateProperty.all(Colors.white),
-                textColor: Colors.blue),
+            }, bgColor: (Colors.white), textColor: Colors.blue),
           ],
         ),
       ),

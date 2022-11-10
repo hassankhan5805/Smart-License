@@ -2,8 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:get/get.dart';
-
-import '../../controllers/loading.dart';
+import 'package:smartlicense/controllers/loading.dart';
 import '../../services/authentication.dart';
 import '../../utils/snackbar.dart';
 import '../../utils/widgets/custom_button.dart';
@@ -13,7 +12,6 @@ import '../../utils/widgets/text_field.dart';
 
 class ResetPassword extends StatelessWidget {
   ResetPassword({Key? key}) : super(key: key);
-  final loading = Get.find<LoadingController>();
   final TextEditingController email = TextEditingController();
 
   @override
@@ -104,7 +102,7 @@ class ResetPassword extends StatelessWidget {
                         GetUtils.isEmail(email.text)
                             ? {
                                 FocusScope.of(context).unfocus(),
-                                loading.isLoading.value = true,
+                                loading(true),
                                 Authentication().forgotPassword(email.text)
                               }
                             : snackbar(
@@ -118,7 +116,7 @@ class ResetPassword extends StatelessWidget {
                       customButton("Abort, Go Back!", () {
                         Get.back();
                       },
-                          bgColor: MaterialStateProperty.all(Colors.white),
+                          bgColor: (Colors.white),
                           textColor: Colors.blue),
                       Spacer(),
                     ],

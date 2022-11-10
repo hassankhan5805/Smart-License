@@ -2,9 +2,8 @@ import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:smartlicense/views/homepage.dart';
-
-import 'authentication/signin.dart';
+import 'package:smartlicense/services/reception.dart';
+import 'signin.dart';
 
 class MyCustomSplashScreen extends StatefulWidget {
   @override
@@ -53,7 +52,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
 
     Future.delayed(Duration(seconds: 3), () {
       FirebaseAuth.instance.currentUser != null
-          ? Get.offAll(() => HomePage())
+          ? Reception().userReception()
           : Get.offAll(() => Signin());
     });
   }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 customButton(String text, Function onTap,
-    {MaterialStateProperty<Color?>? bgColor, Widget? icon, Color? textColor}) {
+    {Color? bgColor, Widget? icon, Color? textColor}) {
   return ElevatedButton(
     onPressed: () => onTap(),
     child: Row(
@@ -23,10 +23,10 @@ customButton(String text, Function onTap,
         ),
       ],
     ),
-    style: ButtonStyle(
-        fixedSize: MaterialStateProperty.all(Size(90.w, 6.7.h)),
-        backgroundColor: bgColor ?? MaterialStateProperty.all(Colors.blue),
-        shape: MaterialStateProperty.all(RoundedRectangleBorder(
+    style: ElevatedButton.styleFrom(
+        fixedSize:Size(90.w, 6.7.h),
+        backgroundColor: bgColor ?? (Colors.blue),
+        shape: (RoundedRectangleBorder(
             side: BorderSide(
               width: 2.0,
               color: textColor ?? Colors.transparent,

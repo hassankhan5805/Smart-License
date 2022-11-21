@@ -16,7 +16,8 @@ class SuperAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(title: "Super Admin", hideBackButton: true),
+      appBar:
+          appBar(context: context, title: "Super Admin", hideBackButton: true),
       body: Stack(
         children: [
           Obx(() {

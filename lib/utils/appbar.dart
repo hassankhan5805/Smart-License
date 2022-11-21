@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smartlicense/services/authentication.dart';
+import 'package:smartlicense/utils/warning.dart';
 
 AppBar appBar(
-    {required String title,
+    {
+    required BuildContext context
+      ,
+      required String title,
     bool hideBackButton = false,
     bool showLogout = true}) {
   return AppBar(
@@ -44,7 +48,7 @@ AppBar appBar(
         child: Padding(
           padding: EdgeInsets.all(10.0.sp),
           child: InkWell(
-            onTap: () => Authentication().signOut(),
+            onTap: () => WarningDialog(context: context, title: "Want to Log Out?", onYes: ()=>Authentication().signOut()),
             child: Icon(
               Icons.logout,
               color: Colors.black,

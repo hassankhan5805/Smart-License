@@ -26,7 +26,7 @@ class SignUp extends StatelessWidget {
       children: [
         Scaffold(
           backgroundColor: Colors.white,
-          appBar: appBar(title: "Register"),
+          appBar: appBar(context:context,title: "Register", showLogout: false),
           body: Padding(
             padding: EdgeInsets.all(8.sp),
             child: ListView(

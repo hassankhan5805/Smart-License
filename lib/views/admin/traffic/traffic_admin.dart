@@ -7,10 +7,9 @@ class TrafficAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(title: "Traffic Admin"),
+      appBar: appBar(context: context, title: "Traffic Admin"),
       body: Column(
-        children: [
-        ],
+        children: [],
       ),
     );
   }

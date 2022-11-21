@@ -7,7 +7,7 @@ class MedicalAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(title: "Medical Admin"),
+      appBar: appBar(context: context, title: "Medical Admin"),
       body: Column(
         children: [],
       ),

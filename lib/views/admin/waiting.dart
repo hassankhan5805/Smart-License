@@ -11,7 +11,7 @@ class WaitingRoom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appBar(title: "Waiting room"),
+      appBar: appBar(context:context,title: "Waiting room"),
       body: Container(
         child: Center(
             child: adminCntr.admin != null

@@ -22,7 +22,11 @@ class Signin extends StatelessWidget {
       children: [
         Scaffold(
           backgroundColor: Colors.white,
-          appBar: appBar(title: "Sign in"),
+          appBar: appBar(
+              context: context,
+              title: "Sign in",
+              showLogout: false,
+              hideBackButton: true),
           body: ListView(
             children: [
               Padding(

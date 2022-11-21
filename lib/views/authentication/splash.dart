@@ -82,7 +82,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
                 duration: Duration(milliseconds: 1000),
                 opacity: _textOpacity,
                 child: Text(
-                  'Smart License System',
+                  'Easy Driving License',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

@@ -31,7 +31,7 @@ class SignUp extends StatelessWidget {
             padding: EdgeInsets.all(8.sp),
             child: ListView(
               children: [
-                alignHeadingText("Welcome to Smart License"),
+                alignHeadingText("Welcome to Easy Driving License"),
                 SizedBox(
                   height: 2.h,
                 ),

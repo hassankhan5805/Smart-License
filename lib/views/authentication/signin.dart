@@ -40,7 +40,7 @@ class Signin extends StatelessWidget {
                       SizedBox(
                         height: 3.h,
                       ),
-                      alignBodyText("Welcome back to Smart License"),
+                      alignBodyText("Welcome back to Easy Driving License"),
                       SizedBox(
                         height: 2.h,
                       ),

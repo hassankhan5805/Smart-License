@@ -9,7 +9,6 @@ import 'controllers/loading.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // await FirebaseAuth.instance.signOut();
   Get.put(LoadingController());
   runApp(const MyApp());
 }

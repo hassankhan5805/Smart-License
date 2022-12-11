@@ -38,7 +38,7 @@ class Authentication {
       loading(false);
       alertSnackbar(e.toString().contains(']')
           ? e.toString().split(']').last
-          : e.toString()); //TODO firebase errors list
+          : e.toString()); //TODO0 firebase errors list
     }
   }
 
@@ -58,7 +58,7 @@ class Authentication {
       });
     } catch (e) {
       loading(false);
-      alertSnackbar(e.toString().split(']').last); //TODO firebase exception
+      alertSnackbar(e.toString().split(']').last); //TODO1 firebase exception
     }
   }
 
@@ -66,13 +66,13 @@ class Authentication {
     FirebaseAuth auth = FirebaseAuth.instance;
 
     try {
-      //TODO set email compariseon after setting up user controller
+      //TODO2 set email compariseon after setting up user controller
       await auth.sendPasswordResetEmail(email: email);
       loading(false);
       snackbar('Success', 'Password reset email sent to ${email}');
     } catch (e) {
       loading(false);
-      alertSnackbar(e.toString().split(']').last); //TODO firebase exception
+      alertSnackbar(e.toString().split(']').last); //TODO3 firebase exception
     }
   }
 
@@ -81,7 +81,7 @@ class Authentication {
       await auth.signOut();
       Get.offAll(() => Signin());
     } catch (e) {
-      snackbar("Error Signing Out", e.toString()); //TODO firebase exception
+      snackbar("Error Signing Out", e.toString()); //TODO4 firebase exception
     }
   }
 }

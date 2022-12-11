@@ -38,11 +38,7 @@ class Signin extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
-                        height: 3.h,
-                      ),
-                      alignHeadingText("SignIn"),
-                      SizedBox(
-                        height: 3.h,
+                        height: 6.h,
                       ),
                       alignBodyText("Welcome back to Easy Driving License"),
                       SizedBox(

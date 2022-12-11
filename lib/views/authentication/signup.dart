@@ -26,7 +26,8 @@ class SignUp extends StatelessWidget {
       children: [
         Scaffold(
           backgroundColor: Colors.white,
-          appBar: appBar(context:context,title: "Register", showLogout: false),
+          appBar:
+              appBar(context: context, title: "Register", showLogout: false),
           body: Padding(
             padding: EdgeInsets.all(8.sp),
             child: ListView(
@@ -54,7 +55,6 @@ class SignUp extends StatelessWidget {
                       value: isAdmin.value,
                       onChange: (v) {
                         isAdmin.value = v;
-                        print(v);
                       }),
                 ),
                 Obx(() => Visibility(

@@ -55,7 +55,7 @@ class AdminServices {
         List<AdminModel> list = [];
         event.docs.forEach((element) {
           final admin = AdminModel.fromJson(element.data());
-          if (admin.uid != auth.currentUser!.uid && !admin.userType!.blocked)
+          if (admin.uid != auth.currentUser!.uid && (admin.userType!="blocked"))
             list.add(admin);
         });
         loading(false);
@@ -75,8 +75,6 @@ class AdminServices {
               ? "trafficAdmin"
               : "medicalAdmin";
       loading(true);
-      print("objectUID");
-      print(admin.uid);
       await firestore
           .collection("admins")
           .doc(admin.uid)

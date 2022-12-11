@@ -59,7 +59,7 @@ Widget AdminCard(
   final heading = TextStyle(
       color: Colors.white, fontSize: 16.sp, fontWeight: FontWeight.bold);
   return Container(
-    height: admin.userType!.pendingAdmin ? 27.h : 17.h,
+    height: admin.userType=="pendingAdmin" ? 27.h : 17.h,
     width: double.infinity,
     decoration: BoxDecoration(
       color: Color.fromARGB(255, 59, 88, 97),
@@ -99,7 +99,7 @@ Widget AdminCard(
           ],
         ),
         Visibility(
-            visible: admin.userType!.pendingAdmin,
+            visible: admin.userType=="pendingAdmin",
             child: Column(
               children: [
                 SizedBox(height: 2.h),

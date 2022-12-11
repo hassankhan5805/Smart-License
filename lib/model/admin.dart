@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:smartlicense/model/type.dart';
 
 class AdminModel {
   String? uid;
@@ -11,7 +10,7 @@ class AdminModel {
   String? type;
   String? approvedBy;
   String? approvedOn;
-  UserType? userType;
+  String? userType;
 
   AdminModel(
       {this.uid,this.name,
@@ -34,7 +33,7 @@ class AdminModel {
     type = json['userType'];
     approvedBy = json['approvedBy'];
     approvedOn = json['approvedOn'];
-    userType = UserType().instance(json['userType']);
+    userType = json['userType'];
   }
 
   Map<String, dynamic> toJson() {

@@ -12,10 +12,8 @@ class UserServices {
   registerUser({required String name, required User user}) async {
     var x = UserModel(
       name: name,
-      email: user.email,
-      registeredOn: Timestamp.now(),
-      status: "",
-      type: "user",
+      email: user.email!,
+      userType: "registration",
     );
     try {
       await firestore.collection("users").doc(user.uid).set(x.toJson());

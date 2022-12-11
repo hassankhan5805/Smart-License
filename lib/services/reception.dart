@@ -8,60 +8,98 @@ import 'package:smartlicense/views/admin/medical/medical_admin.dart';
 import 'package:smartlicense/views/admin/super/super_admin.dart';
 import 'package:smartlicense/views/admin/traffic/traffic_admin.dart';
 import 'package:smartlicense/views/admin/waiting.dart';
-import 'package:smartlicense/views/user/homepage.dart';
+import 'package:smartlicense/views/user/form_registration.dart';
 import '../controllers/user_controller.dart';
-import '../model/type.dart';
 
 class Reception {
   final auth = FirebaseAuth.instance;
   final firestore = FirebaseFirestore.instance;
-  Future<UserType> fetchUserType() async {
-    String type = "none";
+  Future<String?> fetchUserType() async {
     try {
-      type = await firestore
+      return await firestore
           .collection("users")
           .doc(auth.currentUser!.uid)
           .get()
           .then((value) => value['userType'].toString());
     } catch (e) {
       try {
-        type = await firestore
+        return await firestore
             .collection("admins")
             .doc(auth.currentUser!.uid)
             .get()
             .then((value) => value['userType'].toString());
       } catch (e) {
-        return UserType().instance(type);
+        return null;
       }
-      return UserType().instance(type);
     }
-    return UserType().instance(type);
   }
 
   userReception() async {
     final type = await fetchUserType();
-    if (type.user) {
-      final a = Get.put(UserController());
-      a.initUserStream();
-      Get.offAll(() => HomePage());
-    } else if (type.pendingAdmin) {
+
+    switch (type) {
+      case "registration":
+        Get.put(UserController()).initUserStream();
+        
+        Get.offAll(() => FormRegistration());
+        break;
+      case "regWaiting":
+        Get.put(UserController()).initUserStream();
+
+        break;
+      case "medical":
+        Get.put(UserController()).initUserStream();
+
+        break;
+      case "quizTraining":
+        Get.put(UserController()).initUserStream();
+
+        break;
+      case "quiz":
+        Get.put(UserController()).initUserStream();
+
+        break;
+      case "field":
+        Get.put(UserController()).initUserStream();
+
+        break;
+      case "pickup":
+        Get.put(UserController()).initUserStream();
+
+        break;
+      case "trafficAdmin":
         loading(true);
-      Get.put(AdminController());
-      Get.offAll(() => WaitingRoom());
-    } else if (type.superAdmin) {
-      loading(true);
-      Get.put(AdminController());
-      Get.offAll(() => SuperAdmin());
-    } else if (type.medicalAdmin) {
+        Get.put(AdminController());
+        Get.offAll(() => TrafficAdmin());
+
+        break;
+      case "medicalAdmin":
         loading(true);
-      Get.put(AdminController());
-      Get.offAll(() => MedicalAdmin());
-    } else if (type.trafficAdmin) {
+        Get.put(AdminController());
+        Get.offAll(() => MedicalAdmin());
+        break;
+      case "superAdmin":
         loading(true);
-      Get.put(AdminController());
-      Get.offAll(() => TrafficAdmin());
-    } else  {
-      Authentication().signOut();
+        Get.put(AdminController());
+        Get.offAll(() => SuperAdmin());
+        break;
+      case "pendingAdmin":
+        loading(true);
+        Get.put(AdminController());
+        Get.offAll(() => WaitingRoom());
+        break;
+      case "suspended":
+        break;
+      default:
+        Authentication().signOut();
+        break;
     }
+  }
+
+  Future<void> updateUserType(String type, String id) async {
+    return await firestore
+        .collection("users")
+        .doc(id)
+        .update({"userType": type});
   }
 }

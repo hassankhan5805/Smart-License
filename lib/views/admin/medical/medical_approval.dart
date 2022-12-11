@@ -9,22 +9,23 @@ import 'package:smartlicense/utils/snackbar.dart';
 import 'package:smartlicense/utils/widgets/custom_button.dart';
 import 'package:smartlicense/utils/widgets/text_field.dart';
 import 'package:smartlicense/views/user/form.dart';
-import '../../constants/strings.dart';
-import '../../utils/widgets/loading.dart';
 
-class FormApproval extends StatelessWidget {
-  const FormApproval({super.key});
+import '../../../constants/strings.dart';
+import '../../../utils/widgets/loading.dart';
+
+class MedicalApproval extends StatelessWidget {
+  const MedicalApproval({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appBar(context: context, title: "Form Approval"),
+        appBar: appBar(context: context, title: "Medical Approval"),
         body: userCntr.allUsers != null
             ? SizedBox(
                 height: 80.h,
                 child: Obx(() {
                   List<UserModel> filteredList = userCntr.allUsers!
-                      .where((p0) => p0.userType == AllStrings.regWaitingType)
+                      .where((p0) => p0.userType == AllStrings.medicalType)
                       .toList();
                   return ListView.builder(
                       itemCount: filteredList.length,
@@ -106,7 +107,7 @@ class UserCardForAdminExtension extends StatelessWidget {
             SizedBox(height: 1.h),
             UserForm(user: user, height: 60.h),
             SizedBox(height: 1.h),
-            customButton("Accept", () async {
+            customButton("Accept", () async {//TODO
               await Reception().updateFormRelevance(
                   user.copyWith(
                     formComments: declineReason.text,

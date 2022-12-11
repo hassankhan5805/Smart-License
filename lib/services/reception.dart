@@ -119,6 +119,33 @@ class Reception {
             .toJson());
   }
 
+  Future<void> updateMedicalPaymentRelevanceForUser(
+      {required UserModel user, required String txid}) async {
+    await firestore.collection(AllStrings.userCollection).doc(user.id).update(
+        user
+            .copyWith(
+                medicalPaymentStatus: "Waiting for approval",
+                medicalPaymentUpdatedOn: DateTime.now().toString(),
+                medicalPaymentTxID: txid)
+            .toJson());
+  }
+
+  Future<void> updateMedicalPaymentRelevanceForUserAdmin(
+      {required UserModel user,
+      required bool accept,
+      String declineReason = ""}) async {
+    await firestore.collection(AllStrings.userCollection).doc(user.id).update(
+        user
+            .copyWith(
+                medicalPaymentStatus: accept ? "Accepted" : "$declineReason",
+                medicalPaymentUpdatedOn: DateTime.now().toString(),
+                medicalPaymentUpdatedBy: "${adminCntr.admin!.value.name}",
+                userType: accept
+                    ? AllStrings.medicalType
+                    : AllStrings.medicalPaymentType)
+            .toJson());
+  }
+
   Future<void> updateMedicalRelevance(UserModel user, bool accept,
       {String formComments = ""}) async {
     await firestore.collection(AllStrings.userCollection).doc(user.id).update({
@@ -132,17 +159,6 @@ class Reception {
     });
   }
 
-  //   Future<void> updateMedicalPaymentRelevance(UserModel user, bool accept,
-  //     {String formComments = ""}) async {
-  //   await firestore.collection(AllStrings.userCollection).doc(user.id).update({
-  //     AllStrings.userType:
-  //         accept ? AllStrings.medicalType : AllStrings.registrationType,
-  //     AllStrings.formApprovedBy: "${adminCntr.admin!.value.name}",
-  //     AllStrings.formComments: formComments,
-  //     AllStrings.formStatus: accept,
-  //     AllStrings.formApprovedOn: DateTime.now().toString(),
-  //   });
-  // }
   Future<void> updateQuizRelevance(UserModel user, bool accept,
       {String formComments = ""}) async {
     await firestore.collection(AllStrings.userCollection).doc(user.id).update({

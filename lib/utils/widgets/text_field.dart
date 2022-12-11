@@ -23,7 +23,7 @@ textField(String hint, TextEditingController controller,
               border: UnderlineInputBorder(),
               focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.lightBlue)),
-              hintText: hint,
+              // hintText: hint,
               hintStyle: TextStyle(fontWeight: FontWeight.w300)),
           obscureText: obscureText ?? false,
         ),

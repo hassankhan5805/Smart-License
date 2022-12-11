@@ -24,7 +24,7 @@ customButton(String text, Function onTap,
       ],
     ),
     style: ElevatedButton.styleFrom(
-        fixedSize:Size(90.w, 6.7.h),
+        fixedSize: Size(90.w, 6.7.h),
         backgroundColor: bgColor ?? (Colors.blue),
         shape: (RoundedRectangleBorder(
             side: BorderSide(

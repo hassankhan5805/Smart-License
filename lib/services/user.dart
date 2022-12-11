@@ -11,10 +11,11 @@ class UserServices {
 
   registerUser({required String name, required User user}) async {
     var x = UserModel(
-      name: name,
-      email: user.email!,
-      userType: "registration",
-    );
+        name: name,
+        email: user.email!,
+        userType: "registration",
+        id: user.uid,
+        appliedOn: DateTime.now().toString());
     try {
       await firestore.collection("users").doc(user.uid).set(x.toJson());
       loading(false);
@@ -25,11 +26,28 @@ class UserServices {
     }
   }
 
-  Stream<UserModel> streamUser()  {
-    return  firestore
+  Stream<UserModel> streamUser() {
+    return firestore
         .collection("users")
         .doc(auth.currentUser!.uid)
         .snapshots()
         .map((event) => UserModel.fromJson(event.data()!));
+  }
+
+  Stream<List<UserModel>>? streamAllUsers() {
+    try {
+      return firestore.collection("users").snapshots().map((event) {
+        loading(false);
+        List<UserModel> list = [];
+        event.docs.forEach((element) {
+          list.add(UserModel.fromJson(element.data()));
+        });
+        loading(false);
+        return list;
+      });
+    } catch (e) {
+      loading(false);
+      return null;
+    }
   }
 }

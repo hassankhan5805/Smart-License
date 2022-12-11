@@ -133,7 +133,7 @@ class Reception {
   Future<void> updateMedicalPaymentRelevanceForUserAdmin(
       {required UserModel user,
       required bool accept,
-      String declineReason = ""}) async {
+     required String declineReason }) async {
     await firestore.collection(AllStrings.userCollection).doc(user.id).update(
         user
             .copyWith(

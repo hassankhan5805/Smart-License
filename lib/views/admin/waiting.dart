@@ -59,7 +59,8 @@ class DynamicWidgets extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text("${user.medicalPaymentStatus}", textAlign: TextAlign.center),
+        Text("${user.medicalPaymentStatus}",
+            textAlign: TextAlign.center, style: TextStyle(color: Colors.red)),
         Text(
             "Plese submit RS 100 into the account # 234824982347823 Easypaisa\nProvide the Transaction ID below",
             textAlign: TextAlign.center),

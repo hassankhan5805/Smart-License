@@ -45,7 +45,7 @@ class Reception {
         Get.offAll(() => WaitingRoom());
         break;
       case AllStrings.medicalType:
-        Get.offAll(() => FormRegistration());
+        Get.offAll(() => WaitingRoom());
         break;
       case AllStrings.quizTrainingType:
         // Get.offAll(() => QuizTraining());
@@ -54,24 +54,23 @@ class Reception {
         // Get.offAll(() => Quiz());
         break;
       case AllStrings.fieldType:
-        Get.offAll(() => FormRegistration());
+        Get.offAll(() => WaitingRoom());
         break;
       case AllStrings.pickupType:
-        Get.offAll(() => FormRegistration());
+        Get.offAll(() => WaitingRoom());
         break;
       case AllStrings.trafficAdminType:
         Get.offAll(() => TrafficAdmin());
         break;
       case AllStrings.fieldPaymentType:
-        // Get.offAll(() => paywall());
+        Get.offAll(() => WaitingRoom());
         break;
       case AllStrings.pickupPaymentType:
-        // Get.offAll(() => paywall());
+        Get.offAll(() => WaitingRoom());
         break;
       case AllStrings.medicalPaymentType:
         Get.offAll(() => WaitingRoom());
-
-        // Get.offAll(() => paywall());
+        Get.offAll(() => WaitingRoom());
         break;
       case AllStrings.medicalAdminType:
         Get.offAll(() => MedicalAdmin());
@@ -83,10 +82,10 @@ class Reception {
         Get.offAll(() => WaitingRoom());
         break;
       case AllStrings.suspendedType:
-        Get.offAll(() => FormRegistration());
+        Get.offAll(() => WaitingRoom());
         break;
       default:
-        Authentication().signOut();
+        Get.offAll(() => WaitingRoom());
         break;
     }
   }
@@ -133,7 +132,7 @@ class Reception {
   Future<void> updateMedicalPaymentRelevanceForUserAdmin(
       {required UserModel user,
       required bool accept,
-     required String declineReason }) async {
+      required String declineReason}) async {
     await firestore.collection(AllStrings.userCollection).doc(user.id).update(
         user
             .copyWith(
@@ -146,17 +145,23 @@ class Reception {
             .toJson());
   }
 
-  Future<void> updateMedicalRelevance(UserModel user, bool accept,
-      {String formComments = ""}) async {
-    await firestore.collection(AllStrings.userCollection).doc(user.id).update({
-      AllStrings.userType: accept
-          ? AllStrings.quizTrainingType
-          : AllStrings.permanentlyRejectedType,
-      AllStrings.medicalResultGivenBy: "${adminCntr.admin!.value.name}",
-      AllStrings.medicalComments: formComments,
-      AllStrings.medicalResult: accept,
-      AllStrings.medicalResultDeclaredOn: DateTime.now().toString(),
-    });
+  Future<void> updateMedicalRelevance(
+      {required UserModel user,
+      required bool accept,
+      required String formComments}) async {
+    return await firestore
+        .collection(AllStrings.userCollection)
+        .doc(user.id)
+        .update(user
+            .copyWith(
+                medicalResultGivenBy: "${adminCntr.admin!.value.name}",
+                medicalComments: formComments,
+                medicalResult: accept ? "Fit" : "Unfit",
+                medicalResultDeclaredOn: DateTime.now().toString(),
+                userType: accept
+                    ? AllStrings.quizTrainingType
+                    : AllStrings.permanentlyRejectedType)
+            .toJson());
   }
 
   Future<void> updateQuizRelevance(UserModel user, bool accept,

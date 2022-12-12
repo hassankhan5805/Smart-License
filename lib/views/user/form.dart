@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_rx/get_rx.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smartlicense/constants/strings.dart';
 import 'package:smartlicense/controllers/loading.dart';
@@ -22,6 +24,8 @@ class UserForm extends StatelessWidget {
   final bool submitButton;
   final double height;
   final bool readOnly;
+  late final Rx<String> gender = user.gender!.obs;
+  late final Rx<String> martialStatus = user.martialStatus!.obs;
   late final name = TextEditingController(text: user.name);
   late final address = TextEditingController(text: user.address);
   late final cnin = TextEditingController(text: user.cnic);
@@ -29,10 +33,8 @@ class UserForm extends StatelessWidget {
   late final contact = TextEditingController(text: user.contactNo);
   late final email = TextEditingController(text: user.email);
   late final district = TextEditingController(text: user.district);
-  late final gender = TextEditingController(text: user.gender);
   late final licenseCategory =
       TextEditingController(text: user.licenseCategory);
-  late final martialStatus = TextEditingController(text: user.martialStatus);
   late final religion = TextEditingController(text: user.religion);
   late final formStatus = TextEditingController(text: user.formStatus);
   late final type = TextEditingController(text: user.userType);
@@ -52,8 +54,14 @@ class UserForm extends StatelessWidget {
           textField("CNIC", cnin, readOnly: readOnly),
           textField("EMAIL", email, readOnly: true),
           textField("District", district, readOnly: readOnly),
-          textField("Gender", gender, readOnly: readOnly),
-          textField("Martail Status", martialStatus, readOnly: readOnly),
+          RadioButtons(
+              rxx: gender,
+              title: "Gender",
+              options: ["Male", "Female", "Other"]),
+          RadioButtons(
+              rxx: martialStatus,
+              title: "Martail Status",
+              options: ["Married", "Unmarried"]),
           textField("Religion", religion, readOnly: readOnly),
           textField("License Category", licenseCategory, readOnly: readOnly),
           textField("Blood Group", bloodGroup, readOnly: readOnly),
@@ -74,8 +82,8 @@ class UserForm extends StatelessWidget {
                   } else if (name.text.isEmpty ||
                       address.text.isEmpty ||
                       district.text.isEmpty ||
-                      gender.text.isEmpty ||
-                      martialStatus.text.isEmpty ||
+                      gender.value.isEmpty ||
+                      martialStatus.value.isEmpty ||
                       religion.text.isEmpty ||
                       contact.text.isEmpty ||
                       licenseCategory.text.isEmpty) {
@@ -90,8 +98,8 @@ class UserForm extends StatelessWidget {
                             bloodGroup: bloodGroup.text,
                             fatherOrhusbandName: fatherOrHusbandName.text,
                             district: district.text,
-                            gender: gender.text,
-                            martialStatus: martialStatus.text,
+                            gender: gender.value,
+                            martialStatus: martialStatus.value,
                             religion: religion.text,
                             licenseCategory: licenseCategory.text,
                             contactNo: contact.text,
@@ -107,5 +115,49 @@ class UserForm extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class RadioButtons extends StatelessWidget {
+  const RadioButtons(
+      {required this.rxx,
+      required this.title,
+      required this.options,
+      super.key});
+  final Rx<String> rxx;
+  final String title;
+  final List<String> options;
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      rxx.value;
+      return Container(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Text(
+              title,
+              style: TextStyle(fontSize: 18),
+            ),
+            Divider(),
+            SizedBox(
+              height: options.length * 8.h,
+              child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: options.length,
+                  itemBuilder: ((context, index) => RadioListTile(
+                        title: Text(options[index]),
+                        value: options[index],
+                        groupValue: rxx.value,
+                        onChanged: (value) {
+                          rxx.value = value.toString();
+                        },
+                      ))),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }

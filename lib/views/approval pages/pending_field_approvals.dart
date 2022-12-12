@@ -8,7 +8,6 @@ import 'package:smartlicense/utils/appbar.dart';
 import 'package:smartlicense/utils/snackbar.dart';
 import 'package:smartlicense/utils/widgets/custom_button.dart';
 import 'package:smartlicense/utils/widgets/text_field.dart';
-import 'package:smartlicense/views/user/form.dart';
 import '../../constants/strings.dart';
 import '../../utils/widgets/loading.dart';
 
@@ -93,7 +92,7 @@ class UserCardForAdmin extends StatelessWidget {
 class UserCardForAdminExtension extends StatelessWidget {
   UserCardForAdminExtension({super.key, required this.user});
   final UserModel user;
-  final TextEditingController declineReason = TextEditingController();
+  final TextEditingController drivingDetails = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,35 +103,31 @@ class UserCardForAdminExtension extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 1.h),
-            UserForm(user: user, height: 60.h),
+            textField("Driving Test Results", drivingDetails),
             SizedBox(height: 1.h),
-            customButton("Accept", () async {
-              await Reception().updateFormRelevance(
-                  //TODO
-                  user.copyWith(
-                    formComments: declineReason.text,
-                    formStatus: "Completed",
-                    userType: AllStrings.medicalPaymentType,
-                  ),
-                  true);
-              snackbar("Submitted", "Approval submitted!");
-            }),
-            SizedBox(height: 1.h),
-            textField("Decline Reason", declineReason),
-            SizedBox(height: 2.h),
-            customButton("Decline", () async {
-              if (declineReason.text.length > 10) {
-                await Reception().updateFormRelevance(
-                    user.copyWith(
-                      formComments: declineReason.text,
-                      formStatus: "Fail to fulfill",
-                      userType: AllStrings.registrationType,
-                    ),
-                    false);
-                snackbar("Submitted", "Decline submitted!");
+            customButton("Fit for driving", () async {
+              if (drivingDetails.text.length > 10) {
+                await Reception().updateFieldRelevance(
+                    user: user,
+                    accept: true,
+                   comments: drivingDetails.text);
+                snackbar("Submitted", "Submitted!");
               } else {
                 alertSnackbar(
-                    "Decline Reason must be more than 10 charachters");
+                    "Driving Test Results must be more than 10 charachters");
+              }
+            }),
+            SizedBox(height: 2.h),
+            customButton("Not fit for driving", () async {
+              if (drivingDetails.text.length > 10) {
+                await Reception().updateFieldRelevance(
+                    user: user,
+                    accept: false,
+                  comments: drivingDetails.text);
+                snackbar("Submitted", "Submitted!");
+              } else {
+                alertSnackbar(
+                    "Driving Test Results must be more than 10 charachters");
               }
             }, bgColor: Colors.red),
             SizedBox(height: 2.h),

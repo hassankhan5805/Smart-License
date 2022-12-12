@@ -65,7 +65,7 @@ class DynamicWidgets extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.red)),
               Text(
-                  "Plese submit RS 100 into the account # 234824982347823 Easypaisa\nProvide the Transaction ID below",
+                  "For Medical please submit RS 100 into the account # 234824982347823 Easypaisa\nProvide the Transaction ID below",
                   textAlign: TextAlign.center),
               textField("Transaction ID", textCntr),
               customButton("Submit", () async {
@@ -92,7 +92,7 @@ class DynamicWidgets extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.red)),
                   Text(
-                      "Plese submit RS 100 into the account # 234824982347823 Easypaisa\nProvide the Transaction ID below",
+                      "For license card please submit RS 100 into the account # 234824982347823 Easypaisa\nProvide the Transaction ID below",
                       textAlign: TextAlign.center),
                   textField("Transaction ID", textCntr),
                   customButton("Submit", () async {
@@ -100,7 +100,7 @@ class DynamicWidgets extends StatelessWidget {
                       alertSnackbar("Please provide Transaction ID");
                     } else {
                       loading(true);
-                      await Reception().updateMedicalPaymentRelevanceForUser(
+                      await Reception().updatePickupPaymentRelevanceForUser(
                           user: user, txid: textCntr.text);
                       Reception().userReception();
                       loading(false);

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/utils.dart';
 import 'package:smartlicense/model/quiz.dart';
 import '../controllers/loading.dart';
 

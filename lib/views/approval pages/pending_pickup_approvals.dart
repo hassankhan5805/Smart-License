@@ -8,7 +8,6 @@ import 'package:smartlicense/utils/appbar.dart';
 import 'package:smartlicense/utils/snackbar.dart';
 import 'package:smartlicense/utils/widgets/custom_button.dart';
 import 'package:smartlicense/utils/widgets/text_field.dart';
-import 'package:smartlicense/views/user/form.dart';
 import '../../constants/strings.dart';
 import '../../utils/widgets/loading.dart';
 
@@ -93,7 +92,7 @@ class UserCardForAdmin extends StatelessWidget {
 class UserCardForAdminExtension extends StatelessWidget {
   UserCardForAdminExtension({super.key, required this.user});
   final UserModel user;
-  final TextEditingController declineReason = TextEditingController();
+  final TextEditingController pickupDetials = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,36 +103,16 @@ class UserCardForAdminExtension extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: 1.h),
-            UserForm(user: user, height: 60.h),
+            textField("License pickup details", pickupDetials),
             SizedBox(height: 1.h),
-            customButton("Accept", () async {
-              await Reception().updateFormRelevance(
-                  user.copyWith(
-                    formComments: declineReason.text,
-                    formStatus: "Completed",
-                    userType: AllStrings.medicalPaymentType,
-                  ),
-                  true);
-              snackbar("Submitted", "Approval submitted!");
-            }),
-            SizedBox(height: 1.h),
-            textField("Decline Reason", declineReason),
-            SizedBox(height: 2.h),
-            customButton("Decline", () async {
-              if (declineReason.text.length > 10) {
-                await Reception().updateFormRelevance(
-                    user.copyWith(
-                      formComments: declineReason.text,
-                      formStatus: "Fail to fulfill",
-                      userType: AllStrings.registrationType,
-                    ),
-                    false);
-                snackbar("Submitted", "Decline submitted!");
+            customButton("Submit", () async {
+              if (pickupDetials.text.length > 10) {
+                await Reception().updatePickupRelevance(
+                    user: user, accept: true, comments: pickupDetials.text);
               } else {
-                alertSnackbar(
-                    "Decline Reason must be more than 10 charachters");
+                alertSnackbar("Details must be more than 10 charachters");
               }
-            }, bgColor: Colors.red),
+            }),
             SizedBox(height: 2.h),
           ],
         ),

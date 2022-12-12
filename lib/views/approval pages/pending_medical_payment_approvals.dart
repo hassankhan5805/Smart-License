@@ -109,7 +109,7 @@ class UserCardForAdminExtension extends StatelessWidget {
                 readOnly: true),
             SizedBox(height: 1.h),
             customButton("Accept", () async {
-              await Reception().updateMedicalPaymentRelevanceForUserAdmin(
+              await Reception().updateMedicalPaymentRelevanceForAdmin(
                   user: user, accept: true, declineReason: "");
               snackbar("Submitted", "Approval submitted!");
             }),
@@ -118,7 +118,7 @@ class UserCardForAdminExtension extends StatelessWidget {
             SizedBox(height: 2.h),
             customButton("Decline", () async {
               if (declineReason.text.length > 10) {
-                await Reception().updateMedicalPaymentRelevanceForUserAdmin(
+                await Reception().updateMedicalPaymentRelevanceForAdmin(
                     user: user,
                     accept: false,
                     declineReason: declineReason.text);

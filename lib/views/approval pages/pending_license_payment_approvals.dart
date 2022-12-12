@@ -8,7 +8,6 @@ import 'package:smartlicense/utils/appbar.dart';
 import 'package:smartlicense/utils/snackbar.dart';
 import 'package:smartlicense/utils/widgets/custom_button.dart';
 import 'package:smartlicense/utils/widgets/text_field.dart';
-import 'package:smartlicense/views/user/form.dart';
 import '../../constants/strings.dart';
 import '../../utils/widgets/loading.dart';
 
@@ -24,7 +23,8 @@ class LicensePayment extends StatelessWidget {
                 height: 80.h,
                 child: Obx(() {
                   List<UserModel> filteredList = userCntr.allUsers!
-                      .where((p0) => p0.userType == AllStrings.pickupPaymentType)
+                      .where(
+                          (p0) => p0.userType == AllStrings.pickupPaymentType)
                       .toList();
                   return ListView.builder(
                       itemCount: filteredList.length,
@@ -103,31 +103,26 @@ class UserCardForAdminExtension extends StatelessWidget {
         physics: BouncingScrollPhysics(),
         child: Column(
           children: [
+            SizedBox(height: 2.h),
+            textField("Transaction ID (License pickup P\payment)",
+                TextEditingController(text: user.licensePaymentTxID),
+                readOnly: true),
             SizedBox(height: 1.h),
-            UserForm(user: user, height: 60.h),
-            SizedBox(height: 1.h),
-            customButton("Accept", () async {//TODO
-              await Reception().updateFormRelevance(
-                  user.copyWith(
-                    formComments: declineReason.text,
-                    formStatus: "Completed",
-                    userType: AllStrings.medicalPaymentType,
-                  ),
-                  true);
+            customButton("Accept", () async {
+              await Reception().updatePickupPaymentRelevanceForAdmin(
+                  user: user, accept: true, declineReason: "");
               snackbar("Submitted", "Approval submitted!");
             }),
             SizedBox(height: 1.h),
-            textField("Decline Reason", declineReason),
+            textField("Payment Decline Reason", declineReason),
             SizedBox(height: 2.h),
             customButton("Decline", () async {
               if (declineReason.text.length > 10) {
-                await Reception().updateFormRelevance(
-                    user.copyWith(
-                      formComments: declineReason.text,
-                      formStatus: "Fail to fulfill",
-                      userType: AllStrings.registrationType,
-                    ),
-                    false);
+                await Reception().updatePickupPaymentRelevanceForAdmin(
+                    user: user,
+                    accept: false,
+                    declineReason: declineReason.text);
+
                 snackbar("Submitted", "Decline submitted!");
               } else {
                 alertSnackbar(

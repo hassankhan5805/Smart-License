@@ -5,6 +5,7 @@ import 'package:smartlicense/constants/strings.dart';
 import 'package:smartlicense/controllers/admin_controller.dart';
 import 'package:smartlicense/controllers/loading.dart';
 import 'package:smartlicense/model/user.dart';
+import 'package:smartlicense/utils/snackbar.dart';
 import 'package:smartlicense/views/admin/medical/medical_admin.dart';
 import 'package:smartlicense/views/admin/super/super_admin.dart';
 import 'package:smartlicense/views/admin/traffic/traffic_admin.dart';
@@ -132,7 +133,7 @@ class Reception {
             .toJson());
   }
 
-  Future<void> updateMedicalPaymentRelevanceForUserAdmin(
+  Future<void> updateMedicalPaymentRelevanceForAdmin(
       {required UserModel user,
       required bool accept,
       required String declineReason}) async {
@@ -180,47 +181,93 @@ class Reception {
     return;
   }
 
-  Future<void> updateQuizRelevance(UserModel user, bool accept,
-      {String formComments = ""}) async {
-    await firestore.collection(AllStrings.userCollection).doc(user.id).update({
-      AllStrings.userType:
-          accept ? AllStrings.fieldPaymentType : AllStrings.quizTrainingType,
-      AllStrings.quizAttempts: FieldValue.increment(1),
-      AllStrings.quizResult: formComments,
-      AllStrings.quizResultStatus: accept.toString(),
-      AllStrings.quizResultDate: DateTime.now().toString(),
-    });
+  Future<void> updateQuizRelevance(UserModel user,
+      {required RxList<int> result}) async {
+    loading(true);
+    int score = 0;
+    for (int i = 0; i < result.length; i++) {
+      score += result[i];
+    }
+    await firestore.collection(AllStrings.userCollection).doc(user.id).update(
+        user
+            .copyWith(
+                quizAttempts: (user.quizAttempts ?? 0) + 1,
+                quizResult: score.toString() + "/10",
+                quizResultDate: DateTime.now().toString(),
+                quizResultStatus: "Declared ${result}",
+                userType: score < 10//TODO
+                    ? AllStrings.quizTrainingType
+                    : AllStrings.fieldType) 
+            .toJson());
+    score < 10
+        ? alertSnackbar("Test Failed, Try again")
+        : snackbar("Test Success", "");
+    await userReception();
+    loading(false);
   }
 
-  //   Future<void> updateFieldPaymentRelevance(UserModel user, bool accept,
-  //     {String formComments = ""}) async {
-  //   await firestore.collection(AllStrings.userCollection).doc(user.id).update({
-  //     AllStrings.userType:
-  //         accept ? AllStrings.medicalType : AllStrings.registrationType,
-  //     AllStrings.formApprovedBy: "${adminCntr.admin!.value.name}",
-  //     AllStrings.formComments: formComments,
-  //     AllStrings.formStatus: accept,
-  //     AllStrings.formApprovedOn: DateTime.now().toString(),
-  //   });
-  // }
-  Future<void> updateFieldTestRelevance(UserModel user, bool accept,
-      {String formComments = ""}) async {
-    await firestore.collection(AllStrings.userCollection).doc(user.id).update({
-      AllStrings.userType:
-          accept ? AllStrings.pickupPaymentType : AllStrings.fieldPaymentType,
-      AllStrings.fieldTestPaymentUpdatedBy: "${adminCntr.admin!.value.name}",
-      AllStrings.fieldTestPaymentStatus: formComments + accept.toString(),
-      AllStrings.fieldTestPaymentUpdatedOn: DateTime.now().toString(),
-    });
+  Future<void> updateFieldRelevance(
+      {required UserModel user,
+      required bool accept,
+      required String comments}) async {
+    return await firestore
+        .collection(AllStrings.userCollection)
+        .doc(user.id)
+        .update(user
+            .copyWith(
+                drivingTestMonitor: "${adminCntr.admin!.value.name}",
+                drivingTestComments: comments,
+                drivingTestResult: accept ? "Eligible" : "Not-Eligible",
+                drivingTestDate: DateTime.now().toString(),
+                drivingAttempts: (user.drivingAttempts ?? 0) + 1,
+                userType: accept
+                    ? AllStrings.pickupPaymentType
+                    : AllStrings.fieldType)
+            .toJson());
   }
 
-  //Waiting pages
-  //form registraiton waiting
-  //medical payment
-  //medical
-  //field payment
-  //field
-  //license payment
-  //license pickup
-  //permanently rejected
+  Future<void> updatePickupPaymentRelevanceForUser(
+      {required UserModel user, required String txid}) async {
+    await firestore.collection(AllStrings.userCollection).doc(user.id).update(
+        user
+            .copyWith(
+                licensePaymentStatus: "Waiting for approval",
+                licensePaymentUpdatedOn: DateTime.now().toString(),
+                licensePaymentTxID: txid)
+            .toJson());
+  }
+
+  Future<void> updatePickupPaymentRelevanceForAdmin(
+      {required UserModel user,
+      required bool accept,
+      required String declineReason}) async {
+    await firestore.collection(AllStrings.userCollection).doc(user.id).update(
+        user
+            .copyWith(
+                licensePaymentStatus: accept ? "Accepted" : "$declineReason",
+                licensePaymentUpdatedOn: DateTime.now().toString(),
+                licensePaymentUpdatedBy: "${adminCntr.admin!.value.name}",
+                userType: accept
+                    ? AllStrings.pickupType
+                    : AllStrings.pickupPaymentType)
+            .toJson());
+  }
+
+  Future<void> updatePickupRelevance(
+      {required UserModel user,
+      required bool accept,
+      required String comments}) async {
+    await firestore
+        .collection(AllStrings.userCollection)
+        .doc(user.id)
+        .update(user
+            .copyWith(
+              licenseApproval: "Approved",
+              licensePickupDate: comments,
+              licenseAssignedOn: DateTime.now().toString(),
+            )
+            .toJson());
+    snackbar("Submitted", "");
+    return;
+  }
 }

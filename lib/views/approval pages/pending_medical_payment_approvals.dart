@@ -8,7 +8,6 @@ import 'package:smartlicense/utils/appbar.dart';
 import 'package:smartlicense/utils/snackbar.dart';
 import 'package:smartlicense/utils/widgets/custom_button.dart';
 import 'package:smartlicense/utils/widgets/text_field.dart';
-import 'package:smartlicense/views/user/form.dart';
 import '../../constants/strings.dart';
 import '../../utils/widgets/loading.dart';
 

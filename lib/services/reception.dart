@@ -3,13 +3,16 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:smartlicense/constants/strings.dart';
 import 'package:smartlicense/controllers/admin_controller.dart';
+import 'package:smartlicense/controllers/loading.dart';
 import 'package:smartlicense/model/user.dart';
-import 'package:smartlicense/services/authentication.dart';
 import 'package:smartlicense/views/admin/medical/medical_admin.dart';
 import 'package:smartlicense/views/admin/super/super_admin.dart';
 import 'package:smartlicense/views/admin/traffic/traffic_admin.dart';
 import 'package:smartlicense/views/admin/waiting.dart';
 import 'package:smartlicense/views/user/form_registration.dart';
+
+import '../views/quiz/quiz.dart';
+import '../views/quiz/quiz_training.dart';
 
 class Reception {
   final auth = FirebaseAuth.instance;
@@ -48,10 +51,10 @@ class Reception {
         Get.offAll(() => WaitingRoom());
         break;
       case AllStrings.quizTrainingType:
-        // Get.offAll(() => QuizTraining());
+        Get.offAll(() => QuizTraining());
         break;
       case AllStrings.quizType:
-        // Get.offAll(() => Quiz());
+        Get.offAll(() => Quiz());
         break;
       case AllStrings.fieldType:
         Get.offAll(() => WaitingRoom());
@@ -164,6 +167,19 @@ class Reception {
             .toJson());
   }
 
+  Future<void> updateQuizTrainingRelevance(UserModel user) async {
+    loading(true);
+    await firestore.collection(AllStrings.userCollection).doc(user.id).update(
+        user
+            .copyWith(
+                quizTrainingStatus: "completed", userType: AllStrings.quizType)
+            .toJson());
+    await userReception();
+    loading(false);
+
+    return;
+  }
+
   Future<void> updateQuizRelevance(UserModel user, bool accept,
       {String formComments = ""}) async {
     await firestore.collection(AllStrings.userCollection).doc(user.id).update({
@@ -173,15 +189,6 @@ class Reception {
       AllStrings.quizResult: formComments,
       AllStrings.quizResultStatus: accept.toString(),
       AllStrings.quizResultDate: DateTime.now().toString(),
-    });
-  }
-
-  Future<void> updateQuizTrainingRelevance(UserModel user, bool accept,
-      {String formComments = ""}) async {
-    await firestore.collection(AllStrings.userCollection).doc(user.id).update({
-      AllStrings.userType:
-          accept ? AllStrings.quizType : AllStrings.quizTrainingType,
-      AllStrings.quizTrainingStatus: "Completed"
     });
   }
 

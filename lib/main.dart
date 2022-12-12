@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smartlicense/controllers/admin_controller.dart';
+import 'package:smartlicense/controllers/quiz_controller.dart';
 import 'package:smartlicense/controllers/user_controller.dart';
 import 'package:smartlicense/views/authentication/splash.dart';
 import 'controllers/loading.dart';
@@ -13,6 +14,7 @@ void main() async {
   Get.put(LoadingController());
   Get.put(AdminController()).initAdminStream();
   Get.put(UserController()).initUserStream();
+  Get.put(QuizController());
   runApp(const MyApp());
 }
 

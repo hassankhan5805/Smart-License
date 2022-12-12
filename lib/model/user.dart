@@ -62,65 +62,65 @@ class UserModel {
   String? licensePaymentTxID;
   UserModel({
     this.id,
-    this.name = "N/A",
-    this.email = "N/A",
-    this.licenseNo = "N/A",
-    this.fatherOrhusbandName = "N/A",
-    this.dateOfBirth = "N/A",
-    this.cnic = "N/A",
-    this.address = "N/A",
-    this.district = "N/A",
-    this.gender = "N/A",
-    this.contactNo = "N/A",
-    this.religion = "N/A",
-    this.martialStatus = "N/A",
-    this.licenseCategory = "N/A",
-    this.endLicenseCategory = "N/A",
-    this.dOI = "N/A",
-    this.bloodGroup = "N/A",
-    this.validUpTo = "N/A",
-    this.userType = "N/A",
-    this.formComments = "N/A",
-    this.formStatus = "N/A",
-    this.formApprovedBy = "N/A",
-    this.formApprovedOn = "N/A",
-    this.appliedOn = "N/A",
-    this.medicalResult = "N/A",
-    this.medicalResultGivenBy = "N/A",
-    this.medicalResultDeclaredOn = "N/A",
-    this.medicalComments = "N/A",
+    this.name = "",
+    this.email = "",
+    this.licenseNo = "",
+    this.fatherOrhusbandName = "",
+    this.dateOfBirth = "",
+    this.cnic = "",
+    this.address = "",
+    this.district = "",
+    this.gender = "",
+    this.contactNo = "",
+    this.religion = "",
+    this.martialStatus = "",
+    this.licenseCategory = "",
+    this.endLicenseCategory = "",
+    this.dOI = "",
+    this.bloodGroup = "",
+    this.validUpTo = "",
+    this.userType = "",
+    this.formComments = "",
+    this.formStatus = "",
+    this.formApprovedBy = "",
+    this.formApprovedOn = "",
+    this.appliedOn = "",
+    this.medicalResult = "",
+    this.medicalResultGivenBy = "",
+    this.medicalResultDeclaredOn = "",
+    this.medicalComments = "",
     this.mediacalAttempts = 0,
-    this.quizTrainingStatus = "N/A",
-    this.quizResultDate = "N/A",
-    this.quizResult = "N/A",
-    this.quizResultStatus = "N/A",
+    this.quizTrainingStatus = "",
+    this.quizResultDate = "",
+    this.quizResult = "",
+    this.quizResultStatus = "",
     this.quizAttempts = 0,
-    this.drivingTestDate = "N/A",
+    this.drivingTestDate = "",
     this.drivingAttempts = 0,
-    this.drivingTestMonitor = "N/A",
-    this.drivingTestResult = "N/A",
-    this.drivingTestComments = "N/A",
-    this.licenseApproval = "N/A",
-    this.licensePickupDate = "N/A",
-    this.licensePickupLocation = "N/A",
-    this.licenseAssignedOn = "N/A",
-    this.licenseGivenBy = "N/A",
-    this.userConcent = "N/A",
-    this.profilePictureUrl = "N/A",
-    this.idFrontUrl = "N/A",
-    this.idBackUrl = "N/A",
-    this.medicalPaymentStatus = "N/A",
-    this.medicalPaymentUpdatedBy = "N/A",
-    this.medicalPaymentUpdatedOn = "N/A",
-    this.fieldTestPaymentStatus = "N/A",
-    this.fieldTestPaymentUpdatedBy = "N/A",
-    this.fieldTestPaymentUpdatedOn = "N/A",
-    this.licensePaymentStatus = "N/A",
-    this.licensePaymentUpdatedBy = "N/A",
-    this.licensePaymentUpdatedOn = "N/A",
-    this.medicalPaymentTxID = "N/A",
-    this.fieldTestPaymentTxID = "N/A",
-    this.licensePaymentTxID = "N/A",
+    this.drivingTestMonitor = "",
+    this.drivingTestResult = "",
+    this.drivingTestComments = "",
+    this.licenseApproval = "",
+    this.licensePickupDate = "",
+    this.licensePickupLocation = "",
+    this.licenseAssignedOn = "",
+    this.licenseGivenBy = "",
+    this.userConcent = "",
+    this.profilePictureUrl = "",
+    this.idFrontUrl = "",
+    this.idBackUrl = "",
+    this.medicalPaymentStatus = "",
+    this.medicalPaymentUpdatedBy = "",
+    this.medicalPaymentUpdatedOn = "",
+    this.fieldTestPaymentStatus = "",
+    this.fieldTestPaymentUpdatedBy = "",
+    this.fieldTestPaymentUpdatedOn = "",
+    this.licensePaymentStatus = "",
+    this.licensePaymentUpdatedBy = "",
+    this.licensePaymentUpdatedOn = "",
+    this.medicalPaymentTxID = "",
+    this.fieldTestPaymentTxID = "",
+    this.licensePaymentTxID = "",
   });
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -208,19 +208,17 @@ class UserModel {
     data['validUpTo'] = this.validUpTo; //app at end of license pickup
     data['userType'] = this.userType; // varies time to time
     //app - traffic admin
-    data['formComments'] = this.formComments; 
-    data['formStatus'] = this.formStatus; 
-    data['formApprovedBy'] = this.formApprovedBy; 
-    data['formApprovedOn'] = this.formApprovedOn; 
+    data['formComments'] = this.formComments;
+    data['formStatus'] = this.formStatus;
+    data['formApprovedBy'] = this.formApprovedBy;
+    data['formApprovedOn'] = this.formApprovedOn;
     data['appliedOn'] = this.appliedOn; //app - at registration
     //app - medical admin
-    data['medicalResult'] = this.medicalResult; 
-    data['medicalResultGivenBy'] =
-        this.medicalResultGivenBy; 
-    data['medicalResultDeclaredOn'] =
-        this.medicalResultDeclaredOn; 
-    data['medicalComments'] = this.medicalComments; 
-    data['mediacalAttempts'] = this.mediacalAttempts; 
+    data['medicalResult'] = this.medicalResult;
+    data['medicalResultGivenBy'] = this.medicalResultGivenBy;
+    data['medicalResultDeclaredOn'] = this.medicalResultDeclaredOn;
+    data['medicalComments'] = this.medicalComments;
+    data['mediacalAttempts'] = this.mediacalAttempts;
     data['quizTrainingStatus'] =
         this.quizTrainingStatus; //app after completing training
     //app after submitting quiz
@@ -353,7 +351,8 @@ class UserModel {
       appliedOn: appliedOn ?? this.appliedOn,
       medicalResult: medicalResult ?? this.medicalResult,
       medicalResultGivenBy: medicalResultGivenBy ?? this.medicalResultGivenBy,
-      medicalResultDeclaredOn: medicalResultDeclaredOn ?? this.medicalResultDeclaredOn,
+      medicalResultDeclaredOn:
+          medicalResultDeclaredOn ?? this.medicalResultDeclaredOn,
       medicalComments: medicalComments ?? this.medicalComments,
       mediacalAttempts: mediacalAttempts ?? this.mediacalAttempts,
       quizTrainingStatus: quizTrainingStatus ?? this.quizTrainingStatus,
@@ -368,7 +367,8 @@ class UserModel {
       drivingTestComments: drivingTestComments ?? this.drivingTestComments,
       licenseApproval: licenseApproval ?? this.licenseApproval,
       licensePickupDate: licensePickupDate ?? this.licensePickupDate,
-      licensePickupLocation: licensePickupLocation ?? this.licensePickupLocation,
+      licensePickupLocation:
+          licensePickupLocation ?? this.licensePickupLocation,
       licenseAssignedOn: licenseAssignedOn ?? this.licenseAssignedOn,
       licenseGivenBy: licenseGivenBy ?? this.licenseGivenBy,
       userConcent: userConcent ?? this.userConcent,
@@ -376,14 +376,21 @@ class UserModel {
       idFrontUrl: idFrontUrl ?? this.idFrontUrl,
       idBackUrl: idBackUrl ?? this.idBackUrl,
       medicalPaymentStatus: medicalPaymentStatus ?? this.medicalPaymentStatus,
-      medicalPaymentUpdatedBy: medicalPaymentUpdatedBy ?? this.medicalPaymentUpdatedBy,
-      medicalPaymentUpdatedOn: medicalPaymentUpdatedOn ?? this.medicalPaymentUpdatedOn,
-      fieldTestPaymentStatus: fieldTestPaymentStatus ?? this.fieldTestPaymentStatus,
-      fieldTestPaymentUpdatedBy: fieldTestPaymentUpdatedBy ?? this.fieldTestPaymentUpdatedBy,
-      fieldTestPaymentUpdatedOn: fieldTestPaymentUpdatedOn ?? this.fieldTestPaymentUpdatedOn,
+      medicalPaymentUpdatedBy:
+          medicalPaymentUpdatedBy ?? this.medicalPaymentUpdatedBy,
+      medicalPaymentUpdatedOn:
+          medicalPaymentUpdatedOn ?? this.medicalPaymentUpdatedOn,
+      fieldTestPaymentStatus:
+          fieldTestPaymentStatus ?? this.fieldTestPaymentStatus,
+      fieldTestPaymentUpdatedBy:
+          fieldTestPaymentUpdatedBy ?? this.fieldTestPaymentUpdatedBy,
+      fieldTestPaymentUpdatedOn:
+          fieldTestPaymentUpdatedOn ?? this.fieldTestPaymentUpdatedOn,
       licensePaymentStatus: licensePaymentStatus ?? this.licensePaymentStatus,
-      licensePaymentUpdatedBy: licensePaymentUpdatedBy ?? this.licensePaymentUpdatedBy,
-      licensePaymentUpdatedOn: licensePaymentUpdatedOn ?? this.licensePaymentUpdatedOn,
+      licensePaymentUpdatedBy:
+          licensePaymentUpdatedBy ?? this.licensePaymentUpdatedBy,
+      licensePaymentUpdatedOn:
+          licensePaymentUpdatedOn ?? this.licensePaymentUpdatedOn,
       medicalPaymentTxID: medicalPaymentTxID ?? this.medicalPaymentTxID,
       fieldTestPaymentTxID: fieldTestPaymentTxID ?? this.fieldTestPaymentTxID,
       licensePaymentTxID: licensePaymentTxID ?? this.licensePaymentTxID,

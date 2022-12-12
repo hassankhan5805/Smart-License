@@ -36,7 +36,7 @@ class AdminServices {
     try {
       return firestore
           .collection("admins")
-          .doc(auth.currentUser!.uid)
+          .doc(auth.currentUser == null ? "dsfsdf" : auth.currentUser!.uid)
           .snapshots()
           .map((event) {
         loading(false);
@@ -55,8 +55,8 @@ class AdminServices {
         List<AdminModel> list = [];
         event.docs.forEach((element) {
           final admin = AdminModel.fromJson(element.data());
-          if (admin.uid != auth.currentUser!.uid && (admin.userType!="blocked"))
-            list.add(admin);
+          if (admin.uid != auth.currentUser!.uid &&
+              (admin.userType != "blocked")) list.add(admin);
         });
         loading(false);
         return list;

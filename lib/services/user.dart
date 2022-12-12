@@ -29,7 +29,7 @@ class UserServices {
   Stream<UserModel> streamUser() {
     return firestore
         .collection("users")
-        .doc(auth.currentUser!.uid)
+        .doc(auth.currentUser == null ? "sdfsfd" : auth.currentUser!.uid)
         .snapshots()
         .map((event) => UserModel.fromJson(event.data()!));
   }

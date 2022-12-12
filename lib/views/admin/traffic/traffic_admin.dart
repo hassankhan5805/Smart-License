@@ -25,9 +25,9 @@ class TrafficAdmin extends StatelessWidget {
           SizedBox(height: 1.h),
           customButton("Pending meidcal payments Approvals",
               () => Get.to(() => MeidcalPayment())),
-          SizedBox(height: 1.h),
-          customButton("Pending field test payment Approvals",
-              () => Get.to(() => FieldTestPayment())),
+          // SizedBox(height: 1.h),
+          // customButton("Pending field test payment Approvals",
+          //     () => Get.to(() => FieldTestPayment())),
           SizedBox(height: 1.h),
           customButton(
               "Pending Field Approvals", () => Get.to(() => FieldApprovals())),

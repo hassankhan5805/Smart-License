@@ -10,6 +10,8 @@ import 'package:smartlicense/views/admin/medical/medical_admin.dart';
 import 'package:smartlicense/views/admin/super/super_admin.dart';
 import 'package:smartlicense/views/admin/traffic/traffic_admin.dart';
 import 'package:smartlicense/views/admin/waiting.dart';
+import 'package:smartlicense/views/authentication/email_verification.dart';
+import 'package:smartlicense/views/authentication/signin.dart';
 import 'package:smartlicense/views/user/form_registration.dart';
 
 import '../views/quiz/quiz.dart';
@@ -40,10 +42,11 @@ class Reception {
 
   Future<void> userReception() async {
     final type = await fetchUserType();
-    if (!FirebaseAuth.instance.currentUser!.emailVerified)
-    {
-      
-    }else
+    if (FirebaseAuth.instance.currentUser == null) {
+      Get.offAll(() => Signin());
+    } else if (!(FirebaseAuth.instance.currentUser!.emailVerified)) {
+      Get.offAll(() => EmailVerification());
+    } else
       switch (type) {
         case AllStrings.registrationType:
           Get.offAll(() => FormRegistration());

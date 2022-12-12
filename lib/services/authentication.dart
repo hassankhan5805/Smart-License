@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:smartlicense/services/admin.dart';
 import 'package:smartlicense/services/reception.dart';
 import 'package:smartlicense/services/user.dart';
+import 'package:smartlicense/views/authentication/email_verification.dart';
 import 'package:smartlicense/views/authentication/signin.dart';
 import '../../utils/snackbar.dart';
 import '../controllers/loading.dart';
@@ -50,7 +51,10 @@ class Authentication {
           .then((value) {
         if (value.user != null) {
           loading(false);
-          Reception().userReception();
+          if (auth.currentUser!.emailVerified)
+            Reception().userReception();
+          else
+            Get.offAll(() => EmailVerification());
         } else {
           loading(false);
           alertSnackbar("Unknown error");

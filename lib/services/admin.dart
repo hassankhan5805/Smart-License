@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
 import 'package:smartlicense/model/admin.dart';
-import 'package:smartlicense/services/reception.dart';
+import 'package:smartlicense/views/authentication/email_verification.dart';
 
 import '../controllers/loading.dart';
 import '../utils/snackbar.dart';
@@ -25,7 +27,8 @@ class AdminServices {
     try {
       await firestore.collection("admins").doc(user.uid).set(x.toJson());
       loading(false);
-      Reception().userReception();
+      //TODO (chk)reception removed with email verification
+    Get.offAll(()=>EmailVerification()); 
     } catch (e) {
       loading(false);
       alertSnackbar("Can't register admin");

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ void main() async {
   Get.put(UserController()).initUserStream();
   Get.put(QuizController());
   runApp(const MyApp());
+  FirebaseAuth.instance.currentUser!.sendEmailVerification();
 }
 
 class MyApp extends StatelessWidget {

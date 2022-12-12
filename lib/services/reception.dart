@@ -40,58 +40,61 @@ class Reception {
 
   Future<void> userReception() async {
     final type = await fetchUserType();
-
-    switch (type) {
-      case AllStrings.registrationType:
-        Get.offAll(() => FormRegistration());
-        break;
-      case AllStrings.regWaitingType:
-        Get.offAll(() => WaitingRoom());
-        break;
-      case AllStrings.medicalType:
-        Get.offAll(() => WaitingRoom());
-        break;
-      case AllStrings.quizTrainingType:
-        Get.offAll(() => QuizTraining());
-        break;
-      case AllStrings.quizType:
-        Get.offAll(() => Quiz());
-        break;
-      case AllStrings.fieldType:
-        Get.offAll(() => WaitingRoom());
-        break;
-      case AllStrings.pickupType:
-        Get.offAll(() => WaitingRoom());
-        break;
-      case AllStrings.trafficAdminType:
-        Get.offAll(() => TrafficAdmin());
-        break;
-      case AllStrings.fieldPaymentType:
-        Get.offAll(() => WaitingRoom());
-        break;
-      case AllStrings.pickupPaymentType:
-        Get.offAll(() => WaitingRoom());
-        break;
-      case AllStrings.medicalPaymentType:
-        Get.offAll(() => WaitingRoom());
-        Get.offAll(() => WaitingRoom());
-        break;
-      case AllStrings.medicalAdminType:
-        Get.offAll(() => MedicalAdmin());
-        break;
-      case AllStrings.superAdminType:
-        Get.offAll(() => SuperAdmin());
-        break;
-      case AllStrings.pendingAdminType:
-        Get.offAll(() => WaitingRoom());
-        break;
-      case AllStrings.suspendedType:
-        Get.offAll(() => WaitingRoom());
-        break;
-      default:
-        Get.offAll(() => WaitingRoom());
-        break;
-    }
+    if (!FirebaseAuth.instance.currentUser!.emailVerified)
+    {
+      
+    }else
+      switch (type) {
+        case AllStrings.registrationType:
+          Get.offAll(() => FormRegistration());
+          break;
+        case AllStrings.regWaitingType:
+          Get.offAll(() => WaitingRoom());
+          break;
+        case AllStrings.medicalType:
+          Get.offAll(() => WaitingRoom());
+          break;
+        case AllStrings.quizTrainingType:
+          Get.offAll(() => QuizTraining());
+          break;
+        case AllStrings.quizType:
+          Get.offAll(() => Quiz());
+          break;
+        case AllStrings.fieldType:
+          Get.offAll(() => WaitingRoom());
+          break;
+        case AllStrings.pickupType:
+          Get.offAll(() => WaitingRoom());
+          break;
+        case AllStrings.trafficAdminType:
+          Get.offAll(() => TrafficAdmin());
+          break;
+        case AllStrings.fieldPaymentType:
+          Get.offAll(() => WaitingRoom());
+          break;
+        case AllStrings.pickupPaymentType:
+          Get.offAll(() => WaitingRoom());
+          break;
+        case AllStrings.medicalPaymentType:
+          Get.offAll(() => WaitingRoom());
+          Get.offAll(() => WaitingRoom());
+          break;
+        case AllStrings.medicalAdminType:
+          Get.offAll(() => MedicalAdmin());
+          break;
+        case AllStrings.superAdminType:
+          Get.offAll(() => SuperAdmin());
+          break;
+        case AllStrings.pendingAdminType:
+          Get.offAll(() => WaitingRoom());
+          break;
+        case AllStrings.suspendedType:
+          Get.offAll(() => WaitingRoom());
+          break;
+        default:
+          Get.offAll(() => WaitingRoom());
+          break;
+      }
   }
 
   Future<void> updateUserType(String type, String id) async {
@@ -188,16 +191,18 @@ class Reception {
     for (int i = 0; i < result.length; i++) {
       score += result[i];
     }
-    await firestore.collection(AllStrings.userCollection).doc(user.id).update(
-        user
+    await firestore
+        .collection(AllStrings.userCollection)
+        .doc(user.id)
+        .update(user
             .copyWith(
                 quizAttempts: (user.quizAttempts ?? 0) + 1,
                 quizResult: score.toString() + "/10",
                 quizResultDate: DateTime.now().toString(),
                 quizResultStatus: "Declared ${result}",
-                userType: score < 10//TODO
+                userType: score < 10 //TODO
                     ? AllStrings.quizTrainingType
-                    : AllStrings.fieldType) 
+                    : AllStrings.fieldType)
             .toJson());
     score < 10
         ? alertSnackbar("Test Failed, Try again")

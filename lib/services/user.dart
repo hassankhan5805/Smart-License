@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/route_manager.dart';
 import 'package:smartlicense/model/user.dart';
-import 'package:smartlicense/services/reception.dart';
 import 'package:smartlicense/utils/snackbar.dart';
 import '../controllers/loading.dart';
+import '../views/authentication/email_verification.dart';
 
 class UserServices {
   final auth = FirebaseAuth.instance;
@@ -19,7 +20,9 @@ class UserServices {
     try {
       await firestore.collection("users").doc(user.uid).set(x.toJson());
       loading(false);
-      Reception().userReception();
+      //TODO (chk) reception replaced with verification
+          Get.offAll(()=>EmailVerification()); 
+
     } catch (e) {
       loading(false);
       alertSnackbar("Can't register user");

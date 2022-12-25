@@ -6,10 +6,8 @@ import 'package:smartlicense/services/authentication.dart';
 import 'package:smartlicense/utils/warning.dart';
 
 AppBar appBar(
-    {
-    required BuildContext context
-      ,
-      required String title,
+    {required BuildContext context,
+    required String title,
     bool hideBackButton = false,
     bool showLogout = true}) {
   return AppBar(
@@ -19,14 +17,12 @@ AppBar appBar(
       visible: !hideBackButton,
       child: Container(
         width: double.infinity,
-        height: 5.h,
-        child: GestureDetector(
+        height: 6.h,
+        child: InkWell(
           onTap: () => Get.back(),
           child: Row(
             children: [
-              SizedBox(
-                width: 5.w,
-              ),
+              SizedBox(width: 8.w),
               Icon(
                 CupertinoIcons.chevron_back,
                 size: 22.sp,
@@ -48,7 +44,10 @@ AppBar appBar(
         child: Padding(
           padding: EdgeInsets.all(10.0.sp),
           child: InkWell(
-            onTap: () => WarningDialog(context: context, title: "Want to Log Out?", onYes: ()=>Authentication().signOut()),
+            onTap: () => WarningDialog(
+                context: context,
+                title: "Want to Log Out?",
+                onYes: () => Authentication().signOut()),
             child: Icon(
               Icons.logout,
               color: Colors.black,

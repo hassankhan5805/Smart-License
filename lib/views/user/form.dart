@@ -68,12 +68,14 @@ class UserForm extends StatelessWidget {
               rxx: martialStatus,
               title: "Martail Status",
               options: ["Married", "Unmarried"]),
+          Visibility(
+            visible: !submitButton,
+            child: textField("District", district, readOnly: true),
+          ),
           textField("Religion", religion, readOnly: readOnly),
-          textField("District", district, readOnly: true),
           textField("License Category", licenseCategory, readOnly: readOnly),
           textField("Blood Group", bloodGroup, readOnly: readOnly),
           textField("Contact #", contact, readOnly: readOnly),
-          textField("User Status & Type", type, readOnly: true),
           //TODO take docs as input
           SizedBox(height: 1.h),
           Visibility(

@@ -18,6 +18,7 @@ class SignUp extends StatelessWidget {
   final TextEditingController email = TextEditingController();
   final TextEditingController designation = TextEditingController();
   final RxBool isAdmin = false.obs;
+  final RxBool showHelp = false.obs;
   final RxString adminType = 'Traffic Admin'.obs;
 
   @override
@@ -33,9 +34,33 @@ class SignUp extends StatelessWidget {
             child: ListView(
               children: [
                 alignHeadingText("Welcome to Easy Driving License"),
-                SizedBox(
-                  height: 2.h,
-                ),
+                SizedBox(height: 2.h),
+                Obx(() => Column(
+                      children: [
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Show Help"),
+                              IconButton(
+                                  onPressed: () {
+                                    showHelp.value = !showHelp.value;
+                                  },
+                                  icon: Icon(showHelp.value
+                                      ? Icons.arrow_drop_down_circle_sharp
+                                      : Icons.arrow_drop_down_circle_outlined))
+                            ]),
+                        Visibility(visible: showHelp(), child: Text("""
+1.	Enter your Name
+2.	Enter Email Address
+3.	Create your strong password
+4.	Click Register
+5.	Go to Email Application and in a spam folder a new email can  be show open email and then click on link given in email 
+6.	Again go to Easy Driving License Application and click On Refresh button 
+7.	If Email not found the Click on Send again 
+8.	Now  your account is created.""")),
+                      ],
+                    )),
+                SizedBox(height: 2.h),
                 alignBodyText(
                     "Smart License will make the traditional license making system easy"),
                 SizedBox(

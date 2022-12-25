@@ -15,6 +15,7 @@ class Signin extends StatelessWidget {
   Signin({Key? key}) : super(key: key);
   final TextEditingController passController = TextEditingController();
   final TextEditingController email = TextEditingController();
+  final RxBool showHelp = false.obs;
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +40,32 @@ class Signin extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        height: 6.h,
-                      ),
+                      SizedBox(height: 6.h),
                       alignBodyText("Welcome back to Easy Driving License"),
-                      SizedBox(
-                        height: 2.h,
-                      ),
+                      SizedBox(height: 2.h),
+                      Obx(() => Column(
+                            children: [
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text("Show Help"),
+                                    IconButton(
+                                        onPressed: () {
+                                          showHelp.value = !showHelp.value;
+                                        },
+                                        icon: Icon(showHelp.value
+                                            ? Icons.arrow_drop_down_circle_sharp
+                                            : Icons
+                                                .arrow_drop_down_circle_outlined))
+                                  ]),
+                              Visibility(visible: showHelp(), child: Text("""
+1.Enter Email Address
+2.Enter your password 
+3.Click on Continue
+4.If you don't have an account, please press the "Don't have an accunt" below""")),
+                            ],
+                          )),
+                      SizedBox(height: 2.h),
                       alignBlueTextButton(
                           "Don't have an acount?\nGo to Sign Up", () {
                         Get.to(() => SignUp());

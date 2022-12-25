@@ -37,7 +37,7 @@ class Signin extends StatelessWidget {
                   child: ListView(
                     children: [
                       alignBodyText("Welcome back to Easy Driving License"),
-                      Image.asset("assets/images/logo2.png"),
+                      Image.asset("assets/images/logo2.png", height: 20.h),
                       Obx(() => Column(
                             children: [
                               Row(

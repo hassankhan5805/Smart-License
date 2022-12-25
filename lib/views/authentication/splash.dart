@@ -104,11 +104,10 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
                 width: _width / _containerSize,
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: Colors.black,
+                  color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
                 ),
-                // child: Image.asset('assets/images/file_name.png')
-                // child: Image.asset("assets/bicycle.png"),
+                child: Image.asset("assets/images/logo2.png"),
               ),
             ),
           ),

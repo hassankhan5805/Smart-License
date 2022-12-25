@@ -60,12 +60,8 @@ class SignUp extends StatelessWidget {
 8.	Now  your account is created.""")),
                       ],
                     )),
+                Image.asset("assets/images/logo2.png", height: 20.h),
                 SizedBox(height: 2.h),
-                alignBodyText(
-                    "Smart License will make the traditional license making system easy"),
-                SizedBox(
-                  height: 2.h,
-                ),
                 alignBodyText("Already have an account?"),
                 alignBlueTextButton("Sign In", () {
                   Get.to(() => Signin());

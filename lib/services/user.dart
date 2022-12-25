@@ -4,6 +4,7 @@ import 'package:get/route_manager.dart';
 import 'package:smartlicense/model/user.dart';
 import 'package:smartlicense/utils/snackbar.dart';
 import '../controllers/loading.dart';
+import '../controllers/user_controller.dart';
 import '../views/authentication/email_verification.dart';
 
 class UserServices {
@@ -19,10 +20,9 @@ class UserServices {
         appliedOn: DateTime.now().toString());
     try {
       await firestore.collection("users").doc(user.uid).set(x.toJson());
+      userCntr.initUserStream();
       loading(false);
-      //TODO (chk) reception replaced with verification
-          Get.offAll(()=>EmailVerification()); 
-
+      Get.offAll(() => EmailVerification());
     } catch (e) {
       loading(false);
       alertSnackbar("Can't register user");

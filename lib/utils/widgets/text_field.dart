@@ -5,7 +5,7 @@ textField(String hint, TextEditingController controller,
     {Widget? widget,
     bool? obscureText,
     TextInputType textInputType = TextInputType.text,
-    bool readOnly = false}) {
+    bool readOnly = false,int? maxLength=null}) {
   return Padding(
     padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 2.h),
     child: Column(
@@ -13,6 +13,7 @@ textField(String hint, TextEditingController controller,
       children: [
         Text(hint),
         TextField(
+          maxLength: maxLength,
           style: TextStyle(color: Colors.blue),
           controller: controller,
           keyboardType: textInputType,

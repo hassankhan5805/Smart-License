@@ -116,16 +116,20 @@ class Reception {
   //update license payment
   //update license pickup
 
-  Future<void> updateFormRelevance(UserModel user, bool? accept,
+  Future<void>? updateFormRelevance(UserModel user, bool? accept,
       {String formComments = ""}) async {
-    return await firestore
-        .collection(AllStrings.userCollection)
-        .doc(user.id)
-        .update(user
-            .copyWith(
-                formApprovedBy: "${adminCntr.admin!.value.name}",
-                formApprovedOn: DateTime.now().toString())
-            .toJson());
+    try {
+      return await firestore
+          .collection(AllStrings.userCollection)
+          .doc(user.id)
+          .update(user
+              .copyWith(
+                  formApprovedBy: "${adminCntr.admin!.value.name}",
+                  formApprovedOn: DateTime.now().toString())
+              .toJson());
+    } catch (e) {
+      return null;
+    }
   }
 
   Future<void> updateMedicalPaymentRelevanceForUser(

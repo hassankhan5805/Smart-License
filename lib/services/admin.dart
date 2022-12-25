@@ -27,7 +27,6 @@ class AdminServices {
     try {
       await firestore.collection("admins").doc(user.uid).set(x.toJson());
       loading(false);
-      //TODO (chk)reception removed with email verification
     Get.offAll(()=>EmailVerification()); 
     } catch (e) {
       loading(false);

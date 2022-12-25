@@ -29,6 +29,8 @@ class Signin extends StatelessWidget {
               hideBackButton: true),
           body: ListView(
             children: [
+              // Image.asset("assets/images/"),
+              Row(),
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: SizedBox(

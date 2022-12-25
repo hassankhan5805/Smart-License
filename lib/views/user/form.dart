@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/utils.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smartlicense/constants/strings.dart';
 import 'package:smartlicense/controllers/loading.dart';
@@ -51,22 +52,27 @@ class UserForm extends StatelessWidget {
           textField("Father/Husband Name", fatherOrHusbandName,
               readOnly: readOnly),
           textField("Address", address, readOnly: readOnly),
-          textField("CNIC", cnin, readOnly: readOnly),
+          textField("CNIC", cnin,
+              readOnly: readOnly,
+              textInputType: TextInputType.number,
+              maxLength: 13),
+          Visibility(
+            visible: !submitButton,
+            child: RadioButtons(
+                rxx: gender,
+                title: "Gender",
+                options: ["Male", "Female", "Other"]),
+          ),
           textField("EMAIL", email, readOnly: true),
-          textField("District", district, readOnly: readOnly),
-          RadioButtons(
-              rxx: gender,
-              title: "Gender",
-              options: ["Male", "Female", "Other"]),
           RadioButtons(
               rxx: martialStatus,
               title: "Martail Status",
               options: ["Married", "Unmarried"]),
           textField("Religion", religion, readOnly: readOnly),
+          textField("District", district, readOnly: true),
           textField("License Category", licenseCategory, readOnly: readOnly),
           textField("Blood Group", bloodGroup, readOnly: readOnly),
           textField("Contact #", contact, readOnly: readOnly),
-          textField("Form Status", formStatus, readOnly: true),
           textField("User Status & Type", type, readOnly: true),
           //TODO take docs as input
           SizedBox(height: 1.h),
@@ -75,14 +81,12 @@ class UserForm extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 6.w),
                 child: customButton("Submit", () async {
-                  if (cnin.text.length < 13) {
+                  if (!GetUtils.isNum(cnin.text) && cnin.text.length != 13) {
                     alertSnackbar("Please provile valid CNIC");
                   } else if (fatherOrHusbandName.text.isEmpty) {
                     alertSnackbar("Please provile Father/husband name");
                   } else if (name.text.isEmpty ||
                       address.text.isEmpty ||
-                      district.text.isEmpty ||
-                      gender.value.isEmpty ||
                       martialStatus.value.isEmpty ||
                       religion.text.isEmpty ||
                       contact.text.isEmpty ||
@@ -97,8 +101,13 @@ class UserForm extends StatelessWidget {
                             cnic: cnin.text,
                             bloodGroup: bloodGroup.text,
                             fatherOrhusbandName: fatherOrHusbandName.text,
-                            district: district.text,
-                            gender: gender.value,
+                            district:
+                                cnin.text[4] == "1" ? "Abbottabad" : "Other",
+                            gender: int.parse(cnin.text[cnin.text.length - 1]) %
+                                        2 ==
+                                    0
+                                ? "Female"
+                                : "Male",
                             martialStatus: martialStatus.value,
                             religion: religion.text,
                             licenseCategory: licenseCategory.text,

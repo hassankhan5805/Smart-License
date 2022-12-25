@@ -106,7 +106,7 @@ class UserCardForAdminExtension extends StatelessWidget {
             SizedBox(height: 1.h),
             UserForm(user: user, height: 60.h),
             SizedBox(height: 1.h),
-            customButton("Accept", () async {//TODO
+            customButton("Accept", () async {
               await Reception().updateFormRelevance(
                   user.copyWith(
                     formComments: declineReason.text,

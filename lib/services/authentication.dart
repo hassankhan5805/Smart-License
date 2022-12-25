@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:smartlicense/controllers/user_controller.dart';
 import 'package:smartlicense/services/admin.dart';
 import 'package:smartlicense/services/reception.dart';
 import 'package:smartlicense/services/user.dart';
@@ -50,6 +51,7 @@ class Authentication {
           .signInWithEmailAndPassword(email: email, password: pass)
           .then((value) {
         if (value.user != null) {
+          userCntr.initUserStream();
           loading(false);
           if (auth.currentUser!.emailVerified)
             Reception().userReception();

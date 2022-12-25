@@ -18,7 +18,7 @@ class FormRegistration extends StatelessWidget {
           appBar: appBar(
               context: context,
               title: "Form Registration",
-              hideBackButton: true),
+              hideBackButton: false),
           body: Center(
             child: ListView(
               // mainAxisAlignment: MainAxisAlignment.center,

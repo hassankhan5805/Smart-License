@@ -30,19 +30,14 @@ class Signin extends StatelessWidget {
               hideBackButton: true),
           body: ListView(
             children: [
-              // Image.asset("assets/images/"),
-              Row(),
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: SizedBox(
                   height: 85.h,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  child: ListView(
                     children: [
-                      SizedBox(height: 6.h),
                       alignBodyText("Welcome back to Easy Driving License"),
-                      SizedBox(height: 2.h),
+                      Image.asset("assets/images/logo2.png"),
                       Obx(() => Column(
                             children: [
                               Row(
@@ -104,7 +99,7 @@ class Signin extends StatelessWidget {
                           padding: EdgeInsets.only(left: 3.5.w),
                           child: alignBodyText(".",
                               boxAlignment: Alignment.centerLeft)),
-                      Spacer(),
+                      SizedBox(height: 2.h),
                       customButton("Continue", () {
                         if (formValidation()) {
                           FocusScope.of(context).unfocus();

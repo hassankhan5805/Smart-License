@@ -12,7 +12,7 @@ import 'package:smartlicense/views/admin/traffic/traffic_admin.dart';
 import 'package:smartlicense/views/admin/waiting.dart';
 import 'package:smartlicense/views/authentication/email_verification.dart';
 import 'package:smartlicense/views/authentication/signin.dart';
-import 'package:smartlicense/views/user/form_registration.dart';
+import 'package:smartlicense/views/welcome.dart';
 
 import '../views/quiz/quiz.dart';
 import '../views/quiz/quiz_training.dart';
@@ -49,7 +49,7 @@ class Reception {
     } else
       switch (type) {
         case AllStrings.registrationType:
-          Get.offAll(() => FormRegistration());
+          Get.offAll(() => Welcome());
           break;
         case AllStrings.regWaitingType:
           Get.offAll(() => WaitingRoom());

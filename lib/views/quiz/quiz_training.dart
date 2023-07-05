@@ -30,7 +30,7 @@ class QuizTraining extends StatelessWidget {
                               child: Container(
                                   height:
                                       quizContr.allQuizTraining![index].length *
-                                          0.1.h,
+                                          0.05.h,
                                   padding: const EdgeInsets.all(8.0),
                                   width: double.infinity,
                                   decoration: BoxDecoration(

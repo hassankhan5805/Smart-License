@@ -40,6 +40,8 @@ dependencies:
   get: ^4.6.5
   sizer: ^2.0.15
   cloud_firestore: ^4.0.4
+  flutter_stripe: ^9.2.2
+  http: ^1.1.0
 
 dev_dependencies:
   flutter_test:

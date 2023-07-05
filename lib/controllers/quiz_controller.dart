@@ -5,7 +5,7 @@ import 'package:smartlicense/services/quiz.dart';
 final quizContr = Get.find<QuizController>();
 
 class QuizController extends GetxController {
-  RxList<QuizModel>? allquizes = <QuizModel>[].obs;
+  List<QuizModel>? allquizes ;
   RxList<String>? allQuizTraining = <String>[].obs;
   @override
   void onReady() {
@@ -13,7 +13,10 @@ class QuizController extends GetxController {
   }
 
   initQuizStream() async {
-    allquizes!.bindStream(QuizServices().streamAllQuiz()!);
+    allquizes = [];
+        quizQuestions.forEach((element) {
+          allquizes!.add(QuizModel.fromJson(element));
+        });
     allQuizTraining!.bindStream(QuizServices().streamAllTrainings()!);
   }
 }

@@ -207,7 +207,7 @@ class Reception {
                 quizResult: score.toString() + "/10",
                 quizResultDate: DateTime.now().toString(),
                 quizResultStatus: "Declared ${result}",
-                userType: score < 10 //TODO
+                userType: score < 60
                     ? AllStrings.quizTrainingType
                     : AllStrings.fieldType)
             .toJson());

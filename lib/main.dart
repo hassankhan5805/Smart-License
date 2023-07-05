@@ -15,6 +15,7 @@ void main() async {
   Get.put(AdminController()).initAdminStream();
   Get.put(UserController()).initUserStream();
   Get.put(QuizController());
+  
   runApp(const MyApp());
 }
 

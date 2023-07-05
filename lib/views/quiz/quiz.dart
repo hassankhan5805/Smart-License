@@ -20,24 +20,19 @@ class Quiz extends StatelessWidget {
         Scaffold(
             appBar:
                 appBar(context: context, title: "Quiz", hideBackButton: true),
-            body: Obx(() {
-              if (quizContr.allquizes != null &&
-                  quizContr.allquizes!.isNotEmpty) {
-                return ListView.builder(
-                    itemCount: quizContr.allquizes!.length + 1,
-                    itemBuilder: ((context, index) {
-                      return index < quizContr.allquizes!.length
-                          ? QuizCard(index, totalMarks)
-                          : Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: customButton(
-                                  "Submit Quiz",
-                                  () => Reception().updateQuizRelevance(
-                                      userCntr.user.value,result:totalMarks)));
-                    }));
-              } else
-                return LoadingWidget();
-            })),
+            body: ListView.builder(
+                itemCount: quizContr.allquizes!.length + 1,
+                itemBuilder: ((context, index) {
+                  return index < quizContr.allquizes!.length
+                      ? QuizCard(index, totalMarks)
+                      : Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: customButton(
+                              "Submit Quiz",
+                              () => Reception().updateQuizRelevance(
+                                  userCntr.user.value,
+                                  result: totalMarks)));
+                }))),
         LoadingWidget()
       ],
     );

@@ -13,37 +13,44 @@ import 'package:smartlicense/utils/widgets/loading.dart';
 import 'package:smartlicense/utils/widgets/text_field.dart';
 
 import '../../model/user.dart';
+import '../../services/stripe_services.dart';
 
 class WaitingRoom extends StatelessWidget {
   const WaitingRoom({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar:
-          appBar(context: context, title: "Waiting room", hideBackButton: true),
-      body: Container(
-        child: Column(
-          children: [
-            SizedBox(height: 2.h),
-            customButton("Refresh Status", () {
-              Reception().userReception();
-              snackbar("Refreshed", "Status Refreshed!");
-            }),
-            SizedBox(height: 2.h),
-            Center(
-                child: adminCntr.admin != null
-                    ? Obx(() {
-                        return DynamicWidgets(userCntr.user.value);
-                      })
-                    : LoadingWidget()),
-            Spacer(),
-            Text("If you find any issue contact us at saadikhan9598@gmail.com",
-                textAlign: TextAlign.center),
-            SizedBox(height: 3.h)
-          ],
+    return Stack(
+      children: [
+        Scaffold(
+          appBar: appBar(
+              context: context, title: "Waiting room", hideBackButton: true),
+          body: Container(
+            child: Column(
+              children: [
+                SizedBox(height: 2.h),
+                customButton("Refresh Status", () {
+                  Reception().userReception();
+                  snackbar("Refreshed", "Status Refreshed!");
+                }),
+                SizedBox(height: 2.h),
+                Center(
+                    child: adminCntr.admin != null
+                        ? Obx(() {
+                            return DynamicWidgets(userCntr.user.value);
+                          })
+                        : LoadingWidget()),
+                Spacer(),
+                Text(
+                    "If you find any issue contact us at saadikhan9598@gmail.com",
+                    textAlign: TextAlign.center),
+                SizedBox(height: 3.h)
+              ],
+            ),
+          ),
         ),
-      ),
+        LoadingWidget()
+      ],
     );
   }
 }
@@ -64,22 +71,21 @@ class DynamicWidgets extends StatelessWidget {
               Text("${user.medicalPaymentStatus}",
                   textAlign: TextAlign.center,
                   style: TextStyle(color: Colors.red)),
-              Text(
-                  "For Medical please submit RS 100 into the account # 234824982347823 Easypaisa\nProvide the Transaction ID below",
+              Text("For Medical please pay RS 100 ",
                   textAlign: TextAlign.center),
-              textField("Transaction ID", textCntr),
-              customButton("Submit", () async {
-                if (textCntr.text.isEmpty) {
-                  alertSnackbar("Please provide Transaction ID");
-                } else {
-                  loading(true);
-                  await Reception().updateMedicalPaymentRelevanceForUser(
-                      user: user, txid: textCntr.text);
-                  Reception().userReception();
-                  loading(false);
-                  snackbar("Submitted Successfully!",
-                      "Please wait for admin response");
-                }
+              // textField("Transaction ID", textCntr),
+              SizedBox(height: 1.h),
+              customButton("Pay", () async {
+                await StripeServices.instance.initialize();
+                await StripeServices.instance.startPurchase(100.0,
+                    (isSuccess, message) async {
+                  if (isSuccess) {
+                    await Reception().updateMedicalPaymentRelevanceForAdmin(
+                        user: user, accept: true, declineReason: "");
+                  } else {
+                    await alertSnackbar(message);
+                  }
+                });
               })
             ],
           )
@@ -91,22 +97,21 @@ class DynamicWidgets extends StatelessWidget {
                   Text("${user.licensePaymentStatus}",
                       textAlign: TextAlign.center,
                       style: TextStyle(color: Colors.red)),
-                  Text(
-                      "For license card please submit RS 100 into the account # 234824982347823 Easypaisa\nProvide the Transaction ID below",
+                  Text("For license card please pay RS 100.",
                       textAlign: TextAlign.center),
-                  textField("Transaction ID", textCntr),
-                  customButton("Submit", () async {
-                    if (textCntr.text.isEmpty) {
-                      alertSnackbar("Please provide Transaction ID");
-                    } else {
-                      loading(true);
-                      await Reception().updatePickupPaymentRelevanceForUser(
-                          user: user, txid: textCntr.text);
-                      Reception().userReception();
-                      loading(false);
-                      snackbar("Submitted Successfully!",
-                          "Please wait for admin response");
-                    }
+                  SizedBox(height: 1.h),
+                  // textField("Transaction ID", textCntr),
+                  customButton("Pay", () async {
+                    await StripeServices.instance.initialize();
+                    await StripeServices.instance.startPurchase(100.0,
+                        (isSuccess, message) async {
+                      if (isSuccess) {
+                        await Reception().updatePickupPaymentRelevanceForAdmin(
+                            user: user, accept: true, declineReason: "");
+                      } else {
+                        await alertSnackbar(message);
+                      }
+                    });
                   })
                 ],
               )

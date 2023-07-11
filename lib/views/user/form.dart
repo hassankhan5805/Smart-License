@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
-import 'package:get/utils.dart';
 import 'package:sizer/sizer.dart';
 import 'package:smartlicense/constants/strings.dart';
 import 'package:smartlicense/controllers/loading.dart';
 import 'package:smartlicense/services/reception.dart';
 import 'package:smartlicense/utils/snackbar.dart';
-
 import '../../model/user.dart';
 import '../../utils/widgets/custom_button.dart';
 import '../../utils/widgets/text_field.dart';
@@ -30,13 +28,12 @@ class UserForm extends StatelessWidget {
   late final name = TextEditingController(text: user.name);
   late final address = TextEditingController(text: user.address);
   late final cnin = TextEditingController(text: user.cnic);
-  late final bloodGroup = TextEditingController(text: user.bloodGroup);
+  late final Rx<String> bloodGroup = user.bloodGroup!.obs;
   late final contact = TextEditingController(text: user.contactNo);
   late final email = TextEditingController(text: user.email);
   late final district = TextEditingController(text: user.district);
-  late final licenseCategory =
-      TextEditingController(text: user.licenseCategory);
-  late final religion = TextEditingController(text: user.religion);
+  late final Rx<String> licenseCategory = user.licenseCategory!.obs;
+  late final Rx<String> religion = user.religion!.obs;
   late final formStatus = TextEditingController(text: user.formStatus);
   late final type = TextEditingController(text: user.userType);
   late final fatherOrHusbandName =
@@ -72,27 +69,44 @@ class UserForm extends StatelessWidget {
             visible: !submitButton,
             child: textField("District", district, readOnly: true),
           ),
-          textField("Religion", religion, readOnly: readOnly),
-          textField("License Category", licenseCategory, readOnly: readOnly),
-          textField("Blood Group", bloodGroup, readOnly: readOnly),
-          textField("Contact #", contact, readOnly: readOnly),
-          //TODO take docs as input
+          RadioButtons(
+              rxx: religion, title: "Religion", options: ["Islam", "Others"]),
+          RadioButtons(
+              rxx: licenseCategory,
+              title: "License Category",
+              options: ["LTV", "Motorcar/jeep", "HTV"]),
+          RadioButtons(rxx: bloodGroup, title: "Blood group", options: [
+            "O+",
+            "O-",
+            "A+",
+            "A-",
+            "B+",
+            "B-",
+            "AB+",
+            "AB-",
+          ]),
+          textField("Contact #", contact,
+              readOnly: readOnly,
+              textInputType: TextInputType.phone,
+              maxLength: 11),
           SizedBox(height: 1.h),
           Visibility(
               visible: submitButton,
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 6.w),
                 child: customButton("Submit", () async {
-                  if (!GetUtils.isNum(cnin.text) && cnin.text.length != 13) {
+                  if (cnin.text.length != 13) {
                     alertSnackbar("Please provile valid CNIC");
+                  } else if (contact.text.length != 11) {
+                    alertSnackbar("Please provile valid phone number");
                   } else if (fatherOrHusbandName.text.isEmpty) {
                     alertSnackbar("Please provile Father/husband name");
                   } else if (name.text.isEmpty ||
                       address.text.isEmpty ||
                       martialStatus.value.isEmpty ||
-                      religion.text.isEmpty ||
+                      religion.value.isEmpty ||
                       contact.text.isEmpty ||
-                      licenseCategory.text.isEmpty) {
+                      licenseCategory.value.isEmpty) {
                     alertSnackbar("Please provide all the details");
                   } else {
                     loading(true);
@@ -101,7 +115,7 @@ class UserForm extends StatelessWidget {
                             name: name.text,
                             address: address.text,
                             cnic: cnin.text,
-                            bloodGroup: bloodGroup.text,
+                            bloodGroup: bloodGroup.value,
                             fatherOrhusbandName: fatherOrHusbandName.text,
                             district:
                                 cnin.text[4] == "1" ? "Abbottabad" : "Other",
@@ -111,8 +125,8 @@ class UserForm extends StatelessWidget {
                                 ? "Female"
                                 : "Male",
                             martialStatus: martialStatus.value,
-                            religion: religion.text,
-                            licenseCategory: licenseCategory.text,
+                            religion: religion.value,
+                            licenseCategory: licenseCategory.value,
                             contactNo: contact.text,
                             userType: AllStrings.regWaitingType,
                             appliedOn: DateTime.now().toString(),

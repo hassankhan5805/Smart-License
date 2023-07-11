@@ -114,6 +114,7 @@ class UserCardForAdminExtension extends StatelessWidget {
                     userType: AllStrings.medicalPaymentType,
                   ),
                   true);
+              Get.back();
               snackbar("Submitted", "Approval submitted!");
             }),
             SizedBox(height: 1.h),

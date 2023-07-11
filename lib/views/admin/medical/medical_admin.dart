@@ -125,6 +125,7 @@ class UserCardForAdminExtension extends StatelessWidget {
                     user: user,
                     accept: false,
                     formComments: checkupDetails.text);
+                Get.back();
                 snackbar("Submitted", "Checkup submitted!");
               } else {
                 alertSnackbar(
